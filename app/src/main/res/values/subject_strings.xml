@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Layout-->
+    <string name="subject_topic_homework">Homework</string>
+    <string name="subject_topic_test">Test</string>
+    <string name="subject_topic_exam">Exam</string>
+
+</resources>
