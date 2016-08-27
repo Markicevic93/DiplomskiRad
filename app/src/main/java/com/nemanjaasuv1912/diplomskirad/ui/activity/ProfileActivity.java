@@ -12,9 +12,14 @@ import com.nemanjaasuv1912.diplomskirad.R;
 import com.nemanjaasuv1912.diplomskirad.helper.MyRealm;
 import com.nemanjaasuv1912.diplomskirad.helper.validator.UniversityValidator;
 import com.nemanjaasuv1912.diplomskirad.helper.validator.YearValidator;
-import com.nemanjaasuv1912.diplomskirad.model.Profile;
+import com.nemanjaasuv1912.diplomskirad.model.Comment;
+import com.nemanjaasuv1912.diplomskirad.model.Post;
+import com.nemanjaasuv1912.diplomskirad.model.Student;
+import com.nemanjaasuv1912.diplomskirad.model.Subject;
+import com.nemanjaasuv1912.diplomskirad.model.University;
 import com.nemanjaasuv1912.diplomskirad.ui.activity.base.BaseActivity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -26,7 +31,7 @@ public class ProfileActivity extends BaseActivity{
     private EditText etFullName, etUniversity, etYear, etBirthday, etAboutMe;
     private TextView tvUsername, tvEmail;
 
-    private Profile profile;
+    private Student student;
     private boolean editing;
     private Menu menu;
     private HashMap<Integer,String> oldValues;
@@ -52,20 +57,68 @@ public class ProfileActivity extends BaseActivity{
         tvUsername = (TextView) findViewById(R.id.profile_tv_username);
         tvEmail = (TextView) findViewById(R.id.profile_tv_email);
 
-        profile = Profile.getProfileFromDatabase();
+        student = Student.getStudentFromDatabase();
 
-        etFullName.setText(profile.getFullname() != null ? profile.getFullname() : "");
-        etUniversity.setText(profile.getUniversity() != null ? profile.getUniversity().getName() : "" );
-        etBirthday.setText(profile.getBirtday() != null ? profile.getBirtday() : "");
-        etAboutMe.setText(profile.getAboutme()!= null ? profile.getAboutme() : "");
-        etYear.setText(profile.getYear()!= null ? profile.getYear() : "");
-        tvUsername.setText(profile.getUsername()!= null ? profile.getUsername() : "");
-        tvEmail.setText(profile.getEmail()!= null ? profile.getEmail() : "");
+        etFullName.setText(student.getFullname() != null ? student.getFullname() : "");
+        etUniversity.setText(student.getUniversity() != null ? student.getUniversity().getName() : "" );
+        etBirthday.setText(student.getBirtday() != null ? student.getBirtday() : "");
+        etAboutMe.setText(student.getAboutme()!= null ? student.getAboutme() : "");
+        etYear.setText(student.getYear()!= null ? student.getYear() : "");
+        tvUsername.setText(student.getUsername()!= null ? student.getUsername() : "");
+        tvEmail.setText(student.getEmail()!= null ? student.getEmail() : "");
 
         setEditTextsEnabled(false);
 
+        //addData();
+
+    }
+    private void addData() {
+
+        String postText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut volutpat ante. Sed at sem vel nunc tincidunt molestie. Vestibulum vitae mi erat. Vivamus fermentum, ante ac luctus congue, enim neque pretium tortor, vitae vulputate purus eros at magna. Maecenas efficitur ipsum et tristique suscipit.";
+        University university = University.getUniversityFromDatabase();
+        Post subjectPost;
+        Subject subject;
+        Subject subject1;
+        Subject subject2;
+        Subject subject3;
+        ArrayList<Post> subjectItems;
+
+        subjectPost = new Post("Neki post", postText);
+        subjectPost.setTagExam(true);
+        subjectPost.setTagHomework(true);
+        subjectPost.setTagTest(true);
+
+        Comment subjectPostComment = new Comment("Neki Text za komentar", student.getUsername(), student.getUsername());
+
+        subjectPost.addComment(subjectPostComment);
+        subjectItems = new ArrayList<>();
+        subjectItems.add(subjectPost);
+        subject = new Subject("TRV", "Tehnologije Racunara Vnesto", false, 1, subjectItems);
 
 
+        subjectPost = new Post("Domaci post",postText);
+        subjectItems = new ArrayList<>();
+        subjectItems.add(subjectPost);
+        subject1 = new Subject("OOP", "Objektno orijentisano projektovanje", false, 2, subjectItems);
+
+
+        subjectPost = new Post("Test postx",postText);
+        subjectItems = new ArrayList<>();
+        subjectItems.add(subjectPost);
+        subject2 = new Subject("TTT", "Tehnologije Tehnologije Tehnologije", false, 3, subjectItems);
+
+
+        subjectPost = new Post("Neki item",postText);
+        subjectItems = new ArrayList<>();
+        subjectItems.add(subjectPost);
+        subject3 = new Subject("R", "Racunara", false, 4, subjectItems);
+
+        MyRealm.getRealm().beginTransaction();
+        university.addSubject(subject);
+        university.addSubject(subject1);
+        university.addSubject(subject2);
+        university.addSubject(subject3);
+        MyRealm.getRealm  ().commitTransaction();
     }
 
     @Override
@@ -152,11 +205,11 @@ public class ProfileActivity extends BaseActivity{
         if(fullnameValid && birthdayValid && universityValid && yearValid && aboutMeValid){
             MyRealm.getRealm().beginTransaction();
 
-            profile.setFullname(etFullName.getText().toString());
-            profile.setBirtday(etBirthday.getText().toString());
-            profile.setUniversityName(etUniversity.getText().toString());
-            profile.setYear(etYear.getText().toString());
-            profile.setAboutme(etAboutMe.getText().toString());
+            student.setFullname(etFullName.getText().toString());
+            student.setBirtday(etBirthday.getText().toString());
+            student.setUniversityName(etUniversity.getText().toString());
+            student.setYear(etYear.getText().toString());
+            student.setAboutme(etAboutMe.getText().toString());
 
             return true;
         }

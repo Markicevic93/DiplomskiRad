@@ -16,7 +16,7 @@ import com.nemanjaasuv1912.diplomskirad.helper.validator.PasswordValidator;
 import com.nemanjaasuv1912.diplomskirad.helper.validator.UniversityValidator;
 import com.nemanjaasuv1912.diplomskirad.helper.validator.UsernameValidator;
 import com.nemanjaasuv1912.diplomskirad.helper.validator.YearValidator;
-import com.nemanjaasuv1912.diplomskirad.model.Profile;
+import com.nemanjaasuv1912.diplomskirad.model.Student;
 import com.nemanjaasuv1912.diplomskirad.ui.activity.base.BaseActivity;
 
 import java.io.FileNotFoundException;
@@ -56,17 +56,19 @@ public class SignupActivity extends BaseActivity{
         ivCamera = (ImageView) findViewById(R.id.signup_iv_camera);
     }
 
+
+
     public void nextOnClick(View view) {
         if(credentialsValid()){
 
             //// TODO: 8/9/16 send request and write to database on response
-            Profile profile = new Profile();
+            Student profile = new Student();
             profile.setUsername(etUsername.getText().toString());
             profile.setPassword(etPassword.getText().toString()); // todo encript password
             profile.setEmail(etEmail.getText().toString());
             profile.setYear(etYear.getText().toString());
             profile.setUniversityName(etUniversity.getText().toString());
-            Profile.updateProfileInDatabaseAsync(profile);
+            Student.updateStudentInDatabaseAsync(profile);
 
             Intent intent = new Intent(this,MainActivity.class);
             startActivity(intent);

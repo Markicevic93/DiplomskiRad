@@ -1,20 +1,15 @@
 package com.nemanjaasuv1912.diplomskirad.model;
 
-import com.nemanjaasuv1912.diplomskirad.MyApplication;
 import com.nemanjaasuv1912.diplomskirad.helper.MyRealm;
-import com.nemanjaasuv1912.diplomskirad.ui.activity.MainActivity;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import io.realm.RealmObject;
-import io.realm.RealmQuery;
-import io.realm.RealmResults;
 import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by nemanjamarkicevic on 8/8/16.
  */
-public class Profile extends RealmObject {
+public class Student extends RealmObject {
 
     @PrimaryKey
     private String username;
@@ -25,34 +20,51 @@ public class Profile extends RealmObject {
     private String birtday;
     private String aboutme;
     private String email;
+    private String imageUrl;
 
-    public static Profile getProfileFromDatabase(){
-        return MyRealm.getRealm().where(Profile.class).findFirst();
+    public static Student getStudentFromDatabase(){
+            return getStudentFromDatabase(MyRealm.getRealm());
     }
 
-    public static void updateProfileInDatabaseAsync(final Profile newProfile){
+    private static Student getStudentFromDatabase(Realm realm){
+        Student student = realm.where(Student.class).findFirst();
+
+        if(student == null){
+            realm.beginTransaction();
+            student = realm.createObject(Student.class);
+
+            student.username = "";
+            student.password = "";
+            student.fullname = "";
+            student.universityName = "";
+            student.year = "";
+            student.birtday = "";
+            student.aboutme = "";
+            student.email = "";
+            student.imageUrl = "";
+
+            realm.commitTransaction();
+        }
+
+        return student;
+    }
+
+    public static void updateStudentInDatabaseAsync(final Student newProfile){
         MyRealm.getRealm().executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                Profile profile = realm.where(Profile.class).findFirst();
-                University university = realm.where(University.class).findFirst();
+                Student student = getStudentFromDatabase(realm);
+                University university = University.getUniversityFromDatabase(realm);
 
-                if(profile == null){
-                    profile = realm.createObject(Profile.class);
-                }
-
-                if(university == null){
-                    university = realm.createObject(University.class);
-                }
-
-                profile.username = newProfile.username;
-                profile.password = newProfile.password;
-                profile.fullname = newProfile.fullname;
-                profile.aboutme = newProfile.aboutme;
-                profile.birtday = newProfile.birtday;
-                profile.year = newProfile.year;
-                profile.email = newProfile.email;
-                profile.universityName = newProfile.universityName;
+                student.username = newProfile.username;
+                student.password = newProfile.password;
+                student.fullname = newProfile.fullname;
+                student.aboutme = newProfile.aboutme;
+                student.birtday = newProfile.birtday;
+                student.year = newProfile.year;
+                student.email = newProfile.email;
+                student.universityName = newProfile.universityName;
+                student.imageUrl = newProfile.imageUrl;
 
                 university.setName(newProfile.universityName);
             }
@@ -95,6 +107,10 @@ public class Profile extends RealmObject {
         return aboutme;
     }
 
+    public String getImageUrl(){
+        return imageUrl;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -124,11 +140,11 @@ public class Profile extends RealmObject {
         this.aboutme = aboutme;
     }
 
-    public void setUniversityName(String universityName) {
-        this.universityName = universityName;
+    public void setImageUrl(String imageUrl){
+        this.imageUrl = imageUrl;
     }
 
-    public String getUniversityName(){
-        return this.universityName;
+    public void setUniversityName(String universityName) {
+        this.universityName = universityName;
     }
 }

@@ -30,7 +30,7 @@ open class Person(
         // All properties are by default persisted.
         // Properties can be annotated with PrimaryKey or Index.
         // If you use non-nullable types, properties must be initialized with non-null values.
-        @PrimaryKey open var name: String = "",
+        @PrimaryKey open var title: String = "",
 
         open var age: Int = 0,
 

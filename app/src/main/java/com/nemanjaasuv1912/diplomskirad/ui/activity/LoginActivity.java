@@ -9,9 +9,8 @@ import android.widget.EditText;
 import com.nemanjaasuv1912.diplomskirad.R;
 import com.nemanjaasuv1912.diplomskirad.helper.validator.PasswordValidator;
 import com.nemanjaasuv1912.diplomskirad.helper.validator.UsernameValidator;
-import com.nemanjaasuv1912.diplomskirad.model.Profile;
+import com.nemanjaasuv1912.diplomskirad.model.Student;
 import com.nemanjaasuv1912.diplomskirad.ui.activity.base.BaseActivity;
-
 public class LoginActivity extends BaseActivity {
 
     private TextInputLayout tilUsername, tilPassword;
@@ -27,6 +26,13 @@ public class LoginActivity extends BaseActivity {
         etUsername = (EditText) findViewById(R.id.login_et_username);
         etPassword = (EditText) findViewById(R.id.login_et_password);
 
+        autoLogin();
+    }
+
+    private void autoLogin() {
+        etUsername.setText("markicevic");
+        etPassword.setText("sifra");
+        signinOnClick(null);
     }
 
 
@@ -44,9 +50,9 @@ public class LoginActivity extends BaseActivity {
 
         if (usernameValid && passwordValid) {
             //// TODO: 8/9/16  check this with rest api
-            Profile profile = Profile.getProfileFromDatabase();
-            usernameValid = profile != null && (profile.getUsername().compareTo(etUsername.getText().toString()) == 0);
-            passwordValid = profile != null && (profile.getPassword().compareTo(etPassword.getText().toString()) == 0);
+            Student student = Student.getStudentFromDatabase();
+            usernameValid = student != null && (student.getUsername().compareTo(etUsername.getText().toString()) == 0);
+            passwordValid = student != null && (student.getPassword().compareTo(etPassword.getText().toString()) == 0);
 
             if (usernameValid) {
                 tilUsername.setErrorEnabled(false);

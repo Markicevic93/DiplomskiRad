@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">JSON Example</string>
-    <string name="label">My Favorite City</string>
+    <string title="app_name">JSON Example</string>
+    <string title="label">My Favorite City</string>
 </resources>

@@ -38,7 +38,7 @@ public class ChooseSubjectsAdapter extends RecyclerView.Adapter<ChooseSubjectsAd
     public void onBindViewHolder(SubjectViewHolder holder, int position) {
         Subject subject = subjects.get(position);
 
-        holder.tvFullName.setText(subject.getFullName());
+        holder.tvFullName.setText(subject.getName());
         holder.setSelected(subject.isSelected());
     }
 

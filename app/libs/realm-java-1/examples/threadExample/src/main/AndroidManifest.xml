@@ -2,31 +2,31 @@
 <manifest package="io.realm.examples.threads"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:title="android.permission.WAKE_LOCK" />
     
     <application
-        android:name=".MyApplication"
+        android:title=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ThreadExampleActivity"
+            android:title=".ThreadExampleActivity"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:title="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:title="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-            android:name=".ReceivingActivity"
+            android:title=".ReceivingActivity"
             android:label="@string/title_activity_receiving">
         </activity>
-        <service android:name=".ReceivingService"
+        <service android:title=".ReceivingService"
                  android:exported="false" />
-        <receiver android:name=".WakefulReceivingBroadcastReceiver" />
-        <service android:name=".WakefulReceivingService" />
+        <receiver android:title=".WakefulReceivingBroadcastReceiver" />
+        <service android:title=".WakefulReceivingService" />
     </application>
 
 </manifest>

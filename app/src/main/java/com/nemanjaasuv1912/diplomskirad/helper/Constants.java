@@ -15,6 +15,6 @@ public class Constants {
 
     //Intent extras keys
     public static final String SUBJECT_NAME_KEY = "intentSubjectNameKey";
-    public static final String SUBJECT_ITEM_NAME_KEY = "intentSubjectItemNameKey";
+    public static final String SUBJECT_POST_NAME_KEY = "intentSubjectItemNameKey";
 
 }

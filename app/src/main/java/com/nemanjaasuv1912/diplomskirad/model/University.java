@@ -2,47 +2,58 @@ package com.nemanjaasuv1912.diplomskirad.model;
 
 import com.nemanjaasuv1912.diplomskirad.helper.MyRealm;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by nemanjamarkicevic on 8/7/16.
  */
 public class University extends RealmObject {
 
-    @PrimaryKey
     private String name;
     private RealmList<Subject> subjects;
+    private String emailSufix;
+    private String imageUrl;
 
     public University(){
-        this.name = "";
-        this.subjects = new RealmList<>();
-    }
-
-    public University(String name) {
-        this.name = name;
-        this.subjects = new RealmList<>();
-    }
-
-    public University(String name, ArrayList<Subject> subjects){
-        this.name = name;
-        this.subjects = new RealmList<>();
-        Collections.copy(this.subjects,subjects);
+        name = "";
+        emailSufix = "";
+        imageUrl = "";
+        subjects = new RealmList<>();
     }
 
     public University(University university) {
-        this.name = university.getName();
-        this.subjects = new RealmList<>();
+        name = university.name;
+        emailSufix = university.emailSufix;
+        imageUrl = university.imageUrl;
+
+        subjects = new RealmList<>();
         Collections.copy(this.subjects,university.getSubjects());
     }
 
     public static University getUniversityFromDatabase(){
-        return MyRealm.getRealm().where(University.class).findFirst();
+        return getUniversityFromDatabase(MyRealm.getRealm());
+    }
+
+    public static University getUniversityFromDatabase(Realm realm) {
+        University university = realm.where(University.class).findFirst();
+
+        if(university == null){
+            realm.beginTransaction();
+            university = realm.createObject(University.class);
+
+            university.name = "";
+            university.emailSufix = "";
+            university.imageUrl = "";
+            university.subjects = new RealmList<>();
+
+            realm.commitTransaction();
+        }
+
+        return university;
     }
 
     public static void updateUniveristyInDatabaseAsync(final University newUniversity){
@@ -56,6 +67,8 @@ public class University extends RealmObject {
                 }
 
                 university.name = newUniversity.name;
+                university.emailSufix = newUniversity.emailSufix;
+                university.imageUrl = newUniversity.imageUrl;
 
                 for (Subject subject : newUniversity.subjects){
                     Subject.updateSubjectInDatabaseAsync(subject);
@@ -68,21 +81,8 @@ public class University extends RealmObject {
         return subjects;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setSubjects(RealmList<Subject> subjects){
-        this.subjects = new RealmList<>();
-        Collections.copy(this.subjects,subjects);
-    }
-
     public void addSubject(Subject subject){
         this.subjects.add(subject);
-    }
-
-    public void setName(String name){
-        this.name = name;
     }
 
     public RealmList<Subject> getSelectedSubjects() {
@@ -93,6 +93,23 @@ public class University extends RealmObject {
                 selectedSubjects.add(subject);
             }
         }
+
         return selectedSubjects;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmailSufix() {
+        return emailSufix;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 }

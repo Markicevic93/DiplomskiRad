@@ -11,7 +11,7 @@ import com.nemanjaasuv1912.diplomskirad.R;
 import com.nemanjaasuv1912.diplomskirad.helper.Constants;
 import com.nemanjaasuv1912.diplomskirad.model.Subject;
 import com.nemanjaasuv1912.diplomskirad.ui.activity.base.BaseActivity;
-import com.nemanjaasuv1912.diplomskirad.ui.adapter.SubjectPostsAdapter;
+import com.nemanjaasuv1912.diplomskirad.ui.adapter.PostsAdapter;
 import com.nemanjaasuv1912.diplomskirad.ui.view.TopicsButton;
 
 public class SubjectActivity extends BaseActivity {
@@ -32,10 +32,10 @@ public class SubjectActivity extends BaseActivity {
         tbTest = (TopicsButton) findViewById(R.id.subject_tb_test);
         tbExam = (TopicsButton) findViewById(R.id.subject_tb_exam);
 
-        setToolbar(R.id.subject_toolbar, subject.getFullName());
+        setToolbar(R.id.subject_toolbar, subject.getName());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new SubjectPostsAdapter(subject.getSubjectPosts()));
+        recyclerView.setAdapter(new PostsAdapter(subject.getSubjectPosts()));
     }
 
     @Override

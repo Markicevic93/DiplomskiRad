@@ -43,7 +43,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.Subjec
     public void onBindViewHolder(SubjectViewHolder holder, int position) {
         Subject subject = selectedSubjects.get(position);
 
-        holder.tvName.setText(subject.getName());
+        holder.tvShortName.setText(subject.getShortName());
         holder.tvNewItems.setText(String.format( MyApplication.getContext().getString(R.string.newItems), subject.getNewItemsCount()));
     }
 
@@ -54,7 +54,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.Subjec
 
     public class SubjectViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        protected TextView tvName;
+        protected TextView tvShortName;
         protected TextView tvNewItems;
         protected ImageView ivColor;
 
@@ -62,7 +62,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.Subjec
             super(v);
             v.setOnClickListener(this);
 
-            tvName =  (TextView) v.findViewById(R.id.subject_name);
+            tvShortName =  (TextView) v.findViewById(R.id.subject_short_name);
             tvNewItems = (TextView)  v.findViewById(R.id.subject_new_items);
             ivColor = (ImageView)  v.findViewById(R.id.subject_color);
         }
@@ -71,7 +71,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<SubjectsAdapter.Subjec
         public void onClick(View v) {
             Intent intent = new Intent(MyApplication.getContext(), SubjectActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra(Constants.SUBJECT_NAME_KEY, tvName.getText().toString());
+            intent.putExtra(Constants.SUBJECT_NAME_KEY, selectedSubjects.get(getAdapterPosition()).getName());
             MyApplication.getContext().startActivity(intent);
         }
     }

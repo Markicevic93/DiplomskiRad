@@ -7,57 +7,69 @@ import java.util.ArrayList;
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by nemanjamarkicevic on 8/7/16.
  */
 public class Subject extends RealmObject {
 
-    @PrimaryKey
     private String name;
-    private String fullName;
+    private String shortName;
     private boolean selected;
-    private RealmList<SubjectPost> subjectPosts;
+    private int year;
+    private RealmList<Post> subjectPosts;
 
     public Subject(){
-        this.name = "";
-        this.fullName = "";
-        this.selected = false;
-        this.subjectPosts = new RealmList<>();
+        name = "";
+        shortName = "";
+        selected = false;
+        year = 1;
+        subjectPosts = new RealmList<>();
     }
 
-    public Subject(String name, String fullName, boolean selected, ArrayList<SubjectPost> subjectPosts){
+    public Subject(String name, String shortName, boolean selected, int year, ArrayList<Post> subjectPosts){
         this.name = name;
-        this.fullName = fullName;
+        this.shortName = shortName;
         this.selected = selected;
+        this.year = year;
         this.subjectPosts = new RealmList<>();
 
-        for (SubjectPost item : subjectPosts){
-            this.subjectPosts.add(new SubjectPost(item));
+        for (Post item : subjectPosts){
+            this.subjectPosts.add(new Post(item));
         }
     }
 
     public static Subject getSubjectFromDatabase(String name){
-        return MyRealm.getRealm().where(Subject.class).equalTo("name",name).findFirst();
+        return getSubjectFromDatabase(MyRealm.getRealm(),name);
+    }
+
+
+    public static Subject getSubjectFromDatabase(Realm realm, String name){
+        Subject subject = realm.where(Subject.class).equalTo("name",name).findFirst();
+
+        if(subject == null){
+            realm.beginTransaction();
+            subject =realm.createObject(Subject.class);
+            realm.commitTransaction();
+        }
+
+        return subject;
     }
 
     public static void updateSubjectInDatabaseAsync(final Subject newSubject) {
         MyRealm.getRealm().executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                Subject subject = realm.where(Subject.class).equalTo("name",newSubject.name).findFirst();
-
-                if(subject == null){
-                    subject = realm.createObject(Subject.class);
-                }
+                Subject subject = getSubjectFromDatabase(realm, newSubject.name);
 
                 subject.name = newSubject.name;
-                subject.fullName = newSubject.fullName;
+                subject.shortName = newSubject.shortName;
                 subject.selected = newSubject.selected;
+                subject.year = newSubject.year;
 
-                for (SubjectPost subjectPost : newSubject.subjectPosts){
-                    SubjectPost.updateSubjectItemInDatabaseAsync(subjectPost);
+
+                for (Post subjectPost : newSubject.subjectPosts){
+                    Post.updatePostInDatabaseAsync(subjectPost);
                 }
             }
         });
@@ -67,8 +79,8 @@ public class Subject extends RealmObject {
         return name;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getShortName() {
+        return shortName;
     }
 
     public int getNewItemsCount() {
@@ -79,10 +91,6 @@ public class Subject extends RealmObject {
         this.name = name;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
     public boolean isSelected() {
         return selected;
     }
@@ -91,7 +99,7 @@ public class Subject extends RealmObject {
         this.selected = selected;
     }
 
-    public RealmList<SubjectPost> getSubjectPosts(){
+    public RealmList<Post> getSubjectPosts(){
         return subjectPosts;
     }
 }

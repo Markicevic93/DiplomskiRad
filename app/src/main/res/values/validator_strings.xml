@@ -14,6 +14,6 @@
     <string name="email_empty">Email can not be empty</string>
     <string name="university_empty">University can not be empty</string>
     <string name="year_empty">Year can not be empty</string>
-    <string name="fullname_empty">Full name can not be empty</string>
+    <string name="fullname_empty">Full title can not be empty</string>
 
 </resources>

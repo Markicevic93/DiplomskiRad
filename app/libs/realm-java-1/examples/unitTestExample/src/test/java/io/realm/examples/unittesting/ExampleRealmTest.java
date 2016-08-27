@@ -112,7 +112,7 @@ public class ExampleRealmTest {
         // Verify that Realm#createObject was called only once
         verify(mockRealm, times(1)).createObject(Dog.class); // Verify that a Dog was in fact created.
 
-        // Verify that Dog#setName() is called only once
+        // Verify that Dog#setTitle() is called only once
         verify(dog, times(1)).setName(Mockito.anyString()); // Any string will do
 
         // Verify that the Realm was closed only once.

@@ -102,19 +102,19 @@ class KotlinExampleActivity : Activity() {
             // Add a person
             var person = realm.createObject(Person::class.java)
             person.id = 1
-            person.name = "Young Person"
+            person.title = "Young Person"
             person.age = 14
         }
 
         // Find the first person (no query conditions) and read a field
         var person = realm.where(Person::class.java).findFirst()
-        showStatus(person.name + ": " + person.age)
+        showStatus(person.title + ": " + person.age)
 
         // Update person in a transaction
         realm.executeTransaction {
-            person.name = "Senior Person"
+            person.title = "Senior Person"
             person.age = 99
-            showStatus(person.name + " got older: " + person.age)
+            showStatus(person.title + " got older: " + person.age)
         }
     }
 
@@ -131,7 +131,7 @@ class KotlinExampleActivity : Activity() {
         showStatus("\nPerforming basic Link Query operation...")
         showStatus("Number of persons: ${realm.where(Person::class.java).count()}")
 
-        val results = realm.where(Person::class.java).equalTo("cats.name", "Tiger").findAll()
+        val results = realm.where(Person::class.java).equalTo("cats.title", "Tiger").findAll()
 
         showStatus("Size of result set: ${results.size}")
     }
@@ -146,11 +146,11 @@ class KotlinExampleActivity : Activity() {
         // Add ten persons in one transaction
         realm.executeTransaction {
             val fido = realm.createObject(Dog::class.java)
-            fido.name = "fido"
+            fido.title = "fido"
             for (i in 0..9) {
                 val person = realm.createObject(Person::class.java)
                 person.id = i.toLong()
-                person.name = "Person no. $i"
+                person.title = "Person no. $i"
                 person.age = i
                 person.dog = fido
 
@@ -162,7 +162,7 @@ class KotlinExampleActivity : Activity() {
 
                 for (j in 0..i - 1) {
                     val cat = realm.createObject(Cat::class.java)
-                    cat.name = "Cat_$j"
+                    cat.title = "Cat_$j"
                     person.cats.add(cat)
                 }
             }
@@ -173,9 +173,9 @@ class KotlinExampleActivity : Activity() {
 
         // Iterate over all objects
         for (person in realm.where(Person::class.java).findAll()) {
-            val dogName: String = person?.dog?.name ?: "None"
+            val dogName: String = person?.dog?.title ?: "None"
 
-            status += "\n${person.name}: ${person.age} : $dogName : ${person.cats.size}"
+            status += "\n${person.title}: ${person.age} : $dogName : ${person.cats.size}"
 
             // The field tempReference is annotated with @Ignore
             // Though we initially set its value to 42, it has
@@ -185,8 +185,8 @@ class KotlinExampleActivity : Activity() {
 
         // Sorting
         val sortedPersons = realm.where(Person::class.java).findAllSorted("age", Sort.DESCENDING);
-        check(realm.where(Person::class.java).findAll().last().name == sortedPersons.first().name)
-        status += "\nSorting ${sortedPersons.last().name} == ${realm.where(Person::class.java).findAll().first().name}"
+        check(realm.where(Person::class.java).findAll().last().title == sortedPersons.first().title)
+        status += "\nSorting ${sortedPersons.last().title} == ${realm.where(Person::class.java).findAll().first().title}"
 
         realm.close()
         return status
@@ -201,11 +201,11 @@ class KotlinExampleActivity : Activity() {
             // 'it' is the implicit lambda parameter of type Realm
             status += "\nNumber of persons: ${it.where(Person::class.java).count()}"
 
-            // Find all persons where age between 7 and 9 and name begins with "Person".
+            // Find all persons where age between 7 and 9 and title begins with "Person".
             val results = it
                     .where(Person::class.java)
                     .between("age", 7, 9)       // Notice implicit "and" operation
-                    .beginsWith("name", "Person")
+                    .beginsWith("title", "Person")
                     .findAll()
 
             status += "\nSize of result set: ${results.size}"
