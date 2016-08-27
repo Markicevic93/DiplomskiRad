@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Layout-->
+    <string name="signup_edittext_username_placeholder">Username</string>
+    <string name="signup_edittext_password_placeholder">Password</string>
+    <string name="signup_edittext_email_placeholder">Email</string>
+    <string name="signup_edittext_university_placeholder">University</string>
+    <string name="signup_edittext_year_placeholder">Year</string>
+    <string name="signup_button_next_text">Next</string>
+    <string name="signup_toolbar_title">New Account</string>
+
+</resources>

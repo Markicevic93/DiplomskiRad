@@ -1,0 +1,19 @@
+<resources>
+    <string name="username_contains_spaces">Username can not contain space</string>
+    <string name="username_empty">Username can not be empty</string>
+    <string name="username_short">Username can not be less than 5 characters</string>
+    <string name="username_long">Username can not be more than 15 characters</string>
+    <string name="username_bad_regex">Username has invalid characters</string>
+    <string name="username_wrong">Username wrong</string>
+
+    <string name="password_empty">Password can not be empty</string>
+    <string name="password_short">Password can not be less than 5 characters</string>
+    <string name="password_long">Password can not be more than 15 characters</string>
+    <string name="password_wrong">Password wrong</string>
+
+    <string name="email_empty">Email can not be empty</string>
+    <string name="university_empty">University can not be empty</string>
+    <string name="year_empty">Year can not be empty</string>
+    <string name="fullname_empty">Full name can not be empty</string>
+
+</resources>

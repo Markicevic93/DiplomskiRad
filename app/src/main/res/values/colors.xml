@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#4B4097</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF3366</color>
+    <color name="toolbar_background_color">@color/colorPrimary</color>
+
+    <!--Login-->
+    <color name="button_signin_background_color_normal">#FF3366</color>
+    <color name="button_signin_background_color_pressed">#F2FF3366</color>
+
+    <!--Signup-->
+    <color name="button_next_background_color_normal">#FF3366</color>
+    <color name="button_next_background_color_pressed">#F2FF3366</color>
+    <color name="camera_frame_background_color">#26FFFFFF</color>
+
+    <!--Profile-->
+    <color name="profile_activity_background_color">@color/colorPrimary</color>
+
+</resources>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    tools:context="com.nemanjaasuv1912.diplomskirad.ui.activity.SubjectActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/subject_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/ToolbarWithColor"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@android:color/darker_gray">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:padding="20dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_height="75dp">
+
+            <com.nemanjaasuv1912.diplomskirad.ui.view.TopicsButton
+                android:id="@+id/subject_tb_homework"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/subject_topic_background"
+                android:onClick="homeworkOnClick"
+                android:text="@string/subject_topic_homework"/>
+
+            <com.nemanjaasuv1912.diplomskirad.ui.view.TopicsButton
+                android:id="@+id/subject_tb_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:background="@drawable/subject_topic_background"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:onClick="testOnClick"
+                android:text="@string/subject_topic_test"/>
+
+            <com.nemanjaasuv1912.diplomskirad.ui.view.TopicsButton
+                android:id="@+id/subject_tb_exam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:background="@drawable/subject_topic_background"
+                android:layout_marginLeft="5dp"
+                android:onClick="examOnClick"
+                android:text="@string/subject_topic_exam"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textAllCaps="true"
+                android:text="Due date"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="50sp"
+                android:textAllCaps="true"
+                android:text="25"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textAllCaps="true"
+                android:text="wednesday"/>
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/subject_rv_subject_items"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>
