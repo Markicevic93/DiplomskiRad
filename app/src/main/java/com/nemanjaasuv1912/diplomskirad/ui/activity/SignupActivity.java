@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
 import android.os.Bundle;
 import android.view.View;
@@ -70,8 +71,13 @@ public class SignupActivity extends BaseActivity{
             profile.setUniversityName(etUniversity.getText().toString());
             Student.updateStudentInDatabaseAsync(profile);
 
-            Intent intent = new Intent(this,MainActivity.class);
-            startActivity(intent);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(MainActivity.class);
+                }
+            }, 1000);
+
         }
     }
 

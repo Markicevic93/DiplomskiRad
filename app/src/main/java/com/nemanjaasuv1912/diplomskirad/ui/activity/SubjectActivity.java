@@ -1,8 +1,10 @@
 package com.nemanjaasuv1912.diplomskirad.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,16 +27,21 @@ public class SubjectActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subject);
 
-        subject = Subject.getSubjectFromDatabase(getIntent().getExtras().getString(Constants.SUBJECT_NAME_KEY));
-
         recyclerView = (RecyclerView) findViewById(R.id.subject_rv_subject_items);
         tbHomework = (TopicsButton) findViewById(R.id.subject_tb_homework);
         tbTest = (TopicsButton) findViewById(R.id.subject_tb_test);
         tbExam = (TopicsButton) findViewById(R.id.subject_tb_exam);
 
-        setToolbar(R.id.subject_toolbar, subject.getName());
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        subject = Subject.getSubjectFromDatabase(getIntent().getExtras().getString(Constants.SUBJECT_NAME_KEY));
+
+        setToolbar(R.id.subject_toolbar, subject.getName());
         recyclerView.setAdapter(new PostsAdapter(subject.getSubjectPosts()));
     }
 
@@ -49,7 +56,9 @@ public class SubjectActivity extends BaseActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_add) {
-            //// TODO: 8/14/16 add onClick
+            Intent intent = new Intent(this, CreateNewPostActivity.class);
+            intent.putExtra(Constants.SUBJECT_NAME_KEY, subject.getName());
+            startActivity(intent);
             return true;
         }
 
@@ -58,7 +67,7 @@ public class SubjectActivity extends BaseActivity {
 
     public void homeworkOnClick(View view) {
 
-        tbHomework.setSelected(true);
+        tbHomework.setSelected(!tbHomework.isSelected());
         tbTest.setSelected(false);
         tbExam.setSelected(false);
     }
@@ -66,7 +75,7 @@ public class SubjectActivity extends BaseActivity {
     public void testOnClick(View view) {
 
         tbHomework.setSelected(false);
-        tbTest.setSelected(true);
+        tbTest.setSelected(!tbTest.isSelected());
         tbExam.setSelected(false);
     }
 
@@ -74,6 +83,6 @@ public class SubjectActivity extends BaseActivity {
 
         tbHomework.setSelected(false);
         tbTest.setSelected(false);
-        tbExam.setSelected(true);
+        tbExam.setSelected(!tbExam.isSelected());
     }
 }

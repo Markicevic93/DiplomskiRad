@@ -9,10 +9,14 @@ import android.widget.ImageView;
 
 import com.nemanjaasuv1912.diplomskirad.R;
 import com.nemanjaasuv1912.diplomskirad.helper.Constants;
+import com.nemanjaasuv1912.diplomskirad.helper.MyRealm;
+import com.nemanjaasuv1912.diplomskirad.model.Post;
 import com.nemanjaasuv1912.diplomskirad.model.Subject;
 import com.nemanjaasuv1912.diplomskirad.model.University;
 import com.nemanjaasuv1912.diplomskirad.ui.activity.base.BaseActivity;
 import com.nemanjaasuv1912.diplomskirad.ui.adapter.SubjectsAdapter;
+
+import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity {
 

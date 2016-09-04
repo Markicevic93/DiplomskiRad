@@ -27,6 +27,17 @@ public class Subject extends RealmObject {
         subjectPosts = new RealmList<>();
     }
 
+    public Subject(Subject subject){
+        name = subject.name;
+        shortName = subject.shortName;
+        selected = subject.selected;
+        year = subject.year;
+
+        for (Post item : subject.subjectPosts){
+            subjectPosts.add(new Post(item));
+        }
+    }
+
     public Subject(String name, String shortName, boolean selected, int year, ArrayList<Post> subjectPosts){
         this.name = name;
         this.shortName = shortName;
@@ -44,7 +55,7 @@ public class Subject extends RealmObject {
     }
 
 
-    public static Subject getSubjectFromDatabase(Realm realm, String name){
+    private static Subject getSubjectFromDatabase(Realm realm, String name){
         Subject subject = realm.where(Subject.class).equalTo("name",name).findFirst();
 
         if(subject == null){
@@ -101,5 +112,9 @@ public class Subject extends RealmObject {
 
     public RealmList<Post> getSubjectPosts(){
         return subjectPosts;
+    }
+
+    public void addPost(Post post){
+        subjectPosts.add(post);
     }
 }

@@ -34,7 +34,9 @@
         <activity
             android:name=".ui.activity.SubjectPostActivity"
             android:parentActivityName=".ui.activity.SubjectActivity" />
-        <activity android:name=".ui.activity.CreateNewPostActivity"></activity>
+        <activity
+            android:name=".ui.activity.CreateNewPostActivity"
+            android:parentActivityName=".ui.activity.SubjectActivity" />
     </application>
 
 </manifest>

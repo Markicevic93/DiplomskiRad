@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Layout-->
+    <string name="new_post_button_text">CREATE</string>
+    <string name="new_post_add_photo_text">Add photo</string>
+    <string name="new_post_homework">Homework</string>
+    <string name="new_post_test">Test</string>
+    <string name="new_post_exam">Exam</string>
+    <string name="new_post_toolbar_title">NEW POST</string>
+    <string name="new_post_text_hint">Post text</string>
+    <string name="new_post_title_hint">Post title</string>
+
+</resources>
