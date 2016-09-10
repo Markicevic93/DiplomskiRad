@@ -1,62 +1,77 @@
 package com.nemanjaasuv1912.diplomskirad.ui.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.SwitchCompat;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.nemanjaasuv1912.diplomskirad.R;
 import com.nemanjaasuv1912.diplomskirad.helper.Constants;
-import com.nemanjaasuv1912.diplomskirad.helper.MyRealm;
-import com.nemanjaasuv1912.diplomskirad.model.Post;
-import com.nemanjaasuv1912.diplomskirad.model.Subject;
-import com.nemanjaasuv1912.diplomskirad.model.University;
+import com.nemanjaasuv1912.diplomskirad.helper.RequestManager;
+import com.nemanjaasuv1912.diplomskirad.helper.validator.EmptyEditTextValidator;
 import com.nemanjaasuv1912.diplomskirad.ui.activity.base.BaseActivity;
 
-import java.util.ArrayList;
+import okhttp3.Response;
 
 public class CreateNewPostActivity extends BaseActivity {
 
-    private ImageView ivAddPhoto;
-    private SwitchCompat scHomework, scTest, scExam;
-    private EditText etPostText, etPostTitle;
+    private TextInputEditText etPostText, etPostTitle;
+    private TextInputLayout tilPostText, tilPostTitle;
+    private int groupId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_post);
 
-        ivAddPhoto = (ImageView) findViewById(R.id.new_post_add_photo_iv);
-        scHomework = (SwitchCompat) findViewById(R.id.new_post_homework_sc);
-        scTest = (SwitchCompat) findViewById(R.id.new_post_test_sc);
-        scExam = (SwitchCompat) findViewById(R.id.new_post_exam_sc);
-        etPostText = (EditText) findViewById(R.id.new_post_text_et);
-        etPostTitle = (EditText) findViewById(R.id.new_post_title_et);
+        etPostText = (TextInputEditText) findViewById(R.id.new_post_text_et);
+        etPostTitle = (TextInputEditText) findViewById(R.id.new_post_title_et);
 
-        setToolbar(R.id.new_post_toolbar,getResources().getString(R.string.new_post_toolbar_title));
-    }
+        tilPostText = (TextInputLayout) findViewById(R.id.new_post_text_til);
+        tilPostTitle = (TextInputLayout) findViewById(R.id.new_post_title_til);
+
+        groupId = getIntent().getExtras().getInt(Constants.GROUP_ID_KEY);
+
+        setToolbar(R.id.new_post_toolbar,getString(R.string.new_post_toolbar_title));
+       }
 
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
-        return true;
+        return false;
     }
 
     public void createPostOnClick(View view) {
+        tilPostTitle.setErrorEnabled(false);
+        tilPostText.setErrorEnabled(false);
 
-        //// TODO: 9/4/16 Do a validation
+        if(EmptyEditTextValidator.isValid(etPostTitle.getText().toString())){
+            if(EmptyEditTextValidator.isValid(etPostText.getText().toString())){
+                new RequestManager(){
 
-        Subject subject = Subject.getSubjectFromDatabase(getIntent().getExtras().getString(Constants.SUBJECT_NAME_KEY));
-        Post post = new Post(etPostTitle.getText().toString(), etPostText.getText().toString());
-        post.setTagHomework(scHomework.isChecked());
-        post.setTagExam(scExam.isChecked());
-        post.setTagTest(scTest.isChecked());
+                    @Override
+                    protected void onResponse(boolean isSuccessful, Response response) {
 
-        MyRealm.getRealm().beginTransaction();
-        subject.addPost(post);
-        MyRealm.getRealm().commitTransaction();
+                        if(isSuccessful) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    onSupportNavigateUp();
+                                }
+                            });
+                        }
+                    }
 
-        onBackPressed();
+                    @Override
+                    protected void onFailure() {
+
+                    }
+                }.createPost(etPostTitle.getText().toString(), etPostText.getText().toString(), groupId);
+            } else {
+                tilPostText.setError(getString(R.string.post_text_empty));
+            }
+        } else {
+            tilPostTitle.setError(getString(R.string.post_title_empty));
+        }
     }
 }

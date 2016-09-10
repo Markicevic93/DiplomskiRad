@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nemanjaasuv1912.diplomskirad">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -26,17 +28,17 @@
             android:name=".ui.activity.ProfileActivity"
             android:parentActivityName=".ui.activity.MainActivity" />
         <activity
-            android:name=".ui.activity.SubjectActivity"
+            android:name=".ui.activity.GroupActivity"
             android:parentActivityName=".ui.activity.MainActivity" />
         <activity
-            android:name=".ui.activity.ChooseSubjectsActivity"
+            android:name=".ui.activity.ChooseGroupActivity"
             android:parentActivityName=".ui.activity.MainActivity" />
         <activity
-            android:name=".ui.activity.SubjectPostActivity"
-            android:parentActivityName=".ui.activity.SubjectActivity" />
+            android:name=".ui.activity.PostActivity"
+            android:parentActivityName=".ui.activity.GroupActivity" />
         <activity
             android:name=".ui.activity.CreateNewPostActivity"
-            android:parentActivityName=".ui.activity.SubjectActivity" />
+            android:parentActivityName=".ui.activity.GroupActivity" />
     </application>
 
 </manifest>

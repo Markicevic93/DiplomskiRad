@@ -9,17 +9,16 @@ import android.widget.TextView;
 import com.nemanjaasuv1912.diplomskirad.R;
 import com.nemanjaasuv1912.diplomskirad.model.Comment;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-import io.realm.RealmList;
+import java.util.ArrayList;
 
 /**
  * Created by nemanjamarkicevic on 8/7/16.
  */
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHolder> {
 
-    private RealmList<Comment> comments;
+    private ArrayList<Comment> comments;
 
-    public CommentsAdapter(RealmList<Comment> comments){
+    public CommentsAdapter(ArrayList<Comment> comments){
         this.comments = comments;
     }
 
@@ -34,9 +33,10 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     public void onBindViewHolder(CommentViewHolder holder, int position) {
         Comment comment = comments.get(position);
 
-        holder.tvSubjectPostCommentUsername.setText(comment.getUsername());
-        holder.tvSubjectPostCommentText.setText(comment.getText());
-        holder.tvSubjectPostCommentText.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut volutpat ante. Sed at sem vel nunc tincidunt molestie. Vestibulum vitae mi erat. Vivamus fermentum, ante ac luctus congue, enim neq");
+        holder.tvCommentUsername.setText(comment.getStudent().getUsername());
+        holder.tvCommentText.setText(comment.getText());
+        holder.tvCommentUpdatedDate.setText(comment.getUpdatedDate());
+        holder.tvCommentUpdatedTime.setText(comment.getUpdatedTime());
     }
 
     @Override
@@ -46,18 +46,18 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
     public class CommentViewHolder extends RecyclerView.ViewHolder {
 
-        protected TextView tvSubjectPostCommentUsername;
-        protected TextView tvSubjectPostCommentText;
-        protected CircleImageView ivSubjectPostCommenProfileImage;
+        protected TextView tvCommentUsername;
+        protected TextView tvCommentText;
+        protected TextView tvCommentUpdatedDate;
+        protected TextView tvCommentUpdatedTime;
 
         public CommentViewHolder(View v) {
             super(v);
 
-            tvSubjectPostCommentUsername =  (TextView) v.findViewById(R.id.subject_post_comment_username);
-            tvSubjectPostCommentText =  (TextView) v.findViewById(R.id.subject_post_comment_text);
-            ivSubjectPostCommenProfileImage = (CircleImageView)  v.findViewById(R.id.subject_post_comment_profile);
+            tvCommentUsername =  (TextView) v.findViewById(R.id.post_comment_username);
+            tvCommentText =  (TextView) v.findViewById(R.id.post_comment_text);
+            tvCommentUpdatedDate = (TextView)  v.findViewById(R.id.post_comment_updated_date);
+            tvCommentUpdatedTime = (TextView)  v.findViewById(R.id.post_comment_updated_time);
         }
-
     }
-
 }

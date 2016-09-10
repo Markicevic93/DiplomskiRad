@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Layout-->
+    <string name="group_topic_homework">Homework</string>
+    <string name="group_topic_test">Test</string>
+    <string name="group_topic_exam">Exam</string>
+
+    <string name="year">YEAR</string>
+
+</resources>

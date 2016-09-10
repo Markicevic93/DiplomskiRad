@@ -11,20 +11,23 @@ import com.nemanjaasuv1912.diplomskirad.MyApplication;
 import com.nemanjaasuv1912.diplomskirad.R;
 import com.nemanjaasuv1912.diplomskirad.helper.Constants;
 import com.nemanjaasuv1912.diplomskirad.model.Post;
-import com.nemanjaasuv1912.diplomskirad.ui.activity.SubjectPostActivity;
+import com.nemanjaasuv1912.diplomskirad.ui.activity.PostActivity;
+
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.realm.RealmList;
 
 /**
  * Created by nemanjamarkicevic on 8/7/16.
  */
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHolder> {
 
-    private RealmList<Post> posts;
+    private ArrayList<Post> posts;
+    private final int groupId;
 
-    public PostsAdapter(RealmList<Post> posts){
+    public PostsAdapter(ArrayList<Post> posts, int groupId){
         this.posts = posts;
+        this.groupId = groupId;
     }
 
     @Override
@@ -38,7 +41,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
     public void onBindViewHolder(PostViewHolder holder, int position) {
         Post post = posts.get(position);
 
-        holder.tvSubjectItemTitle.setText(post.getTitle());
+        holder.tvPostItemTitle.setText(post.getTitle());
     }
 
     @Override
@@ -49,22 +52,23 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
     public class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 
-        protected TextView tvSubjectItemTitle;
+        protected TextView tvPostItemTitle;
         protected CircleImageView ivColor;
 
         public PostViewHolder(View v) {
             super(v);
             v.setOnClickListener(this);
 
-            tvSubjectItemTitle =  (TextView) v.findViewById(R.id.subject_item_title);
-            ivColor = (CircleImageView)  v.findViewById(R.id.subject_item_color);
+            tvPostItemTitle =  (TextView) v.findViewById(R.id.post_item_title);
+            ivColor = (CircleImageView)  v.findViewById(R.id.post_item_color);
         }
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(MyApplication.getContext(), SubjectPostActivity.class);
+            Intent intent = new Intent(MyApplication.getContext(), PostActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra(Constants.SUBJECT_POST_NAME_KEY, tvSubjectItemTitle.getText().toString());
+            intent.putExtra(Constants.POST_ID_KEY, posts.get(getAdapterPosition()).getId());
+            intent.putExtra(Constants.GROUP_ID_KEY, groupId);
             MyApplication.getContext().startActivity(intent);
         }
     }

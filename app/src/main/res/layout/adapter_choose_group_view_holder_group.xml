@@ -6,7 +6,7 @@
     android:background="@drawable/group_item_background">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/post_item_color"
+        android:id="@+id/group_color"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_gravity="center"
@@ -14,7 +14,7 @@
         android:src="@android:color/holo_red_dark" />
 
     <TextView
-        android:id="@+id/post_item_title"
+        android:id="@+id/group_fullname"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center|start"
