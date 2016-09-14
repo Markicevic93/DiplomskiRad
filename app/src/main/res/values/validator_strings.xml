@@ -5,6 +5,7 @@
     <string name="username_long">Username can not be more than 15 characters</string>
     <string name="username_bad_regex">Username has invalid characters</string>
     <string name="username_wrong">Username wrong</string>
+    <string name="username_exists">Username exists</string>
 
     <string name="password_empty">Password can not be empty</string>
     <string name="password_short">Password can not be less than 5 characters</string>
@@ -12,8 +13,12 @@
     <string name="password_wrong">Password wrong</string>
 
     <string name="email_empty">Email can not be empty</string>
+    <string name="email_bad">Email is not good</string>
     <string name="university_empty">University can not be empty</string>
     <string name="year_empty">Year can not be empty</string>
     <string name="fullname_empty">Full title can not be empty</string>
+    <string name="comment_empty">Comment cannot be empty</string>
+    <string name="post_title_empty">Post title cannot be empty</string>
+    <string name="post_text_empty">Post text cannot be empty</string>
 
 </resources>

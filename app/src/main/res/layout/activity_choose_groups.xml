@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.nemanjaasuv1912.diplomskirad.ui.activity.MainActivity">
+    tools:context=".ui.activity.ChooseGroupActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/main_toolbar"
+        android:id="@+id/choose_group_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/ToolbarWithColor"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/main_groups_rv"
+        android:id="@+id/choose_groups_groups_rv"
         android:layout_width="match_parent"
         android:background="@android:color/white"
         android:layout_height="match_parent"/>

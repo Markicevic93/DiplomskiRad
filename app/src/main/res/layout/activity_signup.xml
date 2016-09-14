@@ -14,236 +14,186 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin">
+        android:orientation="vertical">
 
-        <FrameLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/signup_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.6"
-            android:paddingTop="30dp">
+            android:layout_height="wrap_content"/>
 
-            <!--enable dontAnimate on glide-->
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/signup_civ_profile_picture"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center"
-                android:clickable="true"
-                android:onClick="cameraOnClick"
-                android:src="@color/camera_frame_background_color" />
-
-            <ImageView
-                android:id="@+id/signup_iv_camera"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:clickable="true"
-                android:onClick="cameraOnClick"
-                android:src="@drawable/camera" />
-
-        </FrameLayout>
-
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:scaleType="centerInside"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="bottom"
-                        android:src="@drawable/username" />
-
-                    <android.support.v4.widget.Space
-                        android:layout_width="10dp"
-                        android:layout_height="match_parent" />
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/signup_til_username"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColorHint="@android:color/white">
+                        android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/signup_et_username"
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:scaleType="centerInside"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="bottom"
+                            android:src="@drawable/username" />
+
+                        <android.support.v4.widget.Space
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent" />
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/signup_til_username"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@android:color/white"
-                            android:gravity="center_vertical"
-                            android:hint="@string/signup_edittext_username_placeholder"
-                            android:textColor="@android:color/white" />
+                            android:textColorHint="@android:color/white">
 
-                    </android.support.design.widget.TextInputLayout>
-                </LinearLayout>
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/signup_et_username"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@android:color/white"
+                                android:gravity="center_vertical"
+                                android:hint="@string/signup_edittext_username_placeholder"
+                                android:textColor="@android:color/white" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                        </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/email" />
-
-                    <android.support.v4.widget.Space
-                        android:layout_width="10dp"
-                        android:layout_height="match_parent" />
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/signup_til_email"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColorHint="@android:color/white">
+                        android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/signup_et_email"
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/email" />
+
+                        <android.support.v4.widget.Space
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent" />
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/signup_til_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@android:color/white"
-                            android:gravity="center_vertical"
-                            android:hint="@string/signup_edittext_email_placeholder"
-                            android:inputType="textEmailAddress"
-                            android:textColor="@android:color/white" />
+                            android:textColorHint="@android:color/white">
 
-                    </android.support.design.widget.TextInputLayout>
-                </LinearLayout>
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/signup_et_email"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@android:color/white"
+                                android:gravity="center_vertical"
+                                android:hint="@string/signup_edittext_email_placeholder"
+                                android:inputType="textEmailAddress"
+                                android:textColor="@android:color/white" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                        </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/password" />
-
-                    <android.support.v4.widget.Space
-                        android:layout_width="10dp"
-                        android:layout_height="match_parent" />
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/signup_til_password"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColorHint="@android:color/white">
+                        android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/signup_et_password"
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/password" />
+
+                        <android.support.v4.widget.Space
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent" />
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/signup_til_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@android:color/white"
-                            android:gravity="center_vertical"
-                            android:inputType="textPassword"
-                            android:hint="@string/signup_edittext_password_placeholder"
-                            android:textColor="@android:color/white" />
+                            android:textColorHint="@android:color/white">
 
-                    </android.support.design.widget.TextInputLayout>
-                </LinearLayout>
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/signup_et_password"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@android:color/white"
+                                android:gravity="center_vertical"
+                                android:inputType="textPassword"
+                                android:hint="@string/signup_edittext_password_placeholder"
+                                android:textColor="@android:color/white" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                        </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/university" />
-
-                    <android.support.v4.widget.Space
-                        android:layout_width="10dp"
-                        android:layout_height="match_parent" />
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/signup_til_university"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColorHint="@android:color/white">
+                        android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/signup_et_university"
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/year" />
+
+                        <android.support.v4.widget.Space
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent" />
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/signup_til_year"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@android:color/white"
-                            android:gravity="center_vertical"
-                            android:hint="@string/signup_edittext_university_placeholder"
-                            android:textColor="@android:color/white" />
+                            android:textColorHint="@android:color/white">
 
-                    </android.support.design.widget.TextInputLayout>
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/signup_et_year"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@android:color/white"
+                                android:gravity="center_vertical"
+                                android:inputType="textFilter|number"
+                                android:digits="1234"
+                                android:maxLength="1"
+                                android:hint="@string/signup_edittext_year_placeholder"
+                                android:textColor="@android:color/white" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+            </ScrollView>
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/year" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/signup_button_next_background"
+                android:onClick="nextOnClick"
+                android:text="@string/signup_button_next_text"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white" />
 
-                    <android.support.v4.widget.Space
-                        android:layout_width="10dp"
-                        android:layout_height="match_parent" />
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/signup_til_year"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColorHint="@android:color/white">
-
-                        <EditText
-                            android:id="@+id/signup_et_year"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@android:color/white"
-                            android:gravity="center_vertical"
-                            android:inputType="number"
-                            android:hint="@string/signup_edittext_year_placeholder"
-                            android:textColor="@android:color/white" />
-
-                    </android.support.design.widget.TextInputLayout>
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </ScrollView>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/signup_button_next_background"
-            android:onClick="nextOnClick"
-            android:text="@string/signup_button_next_text"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white" />
+        </LinearLayout>
 
     </LinearLayout>
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/signup_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
 </FrameLayout>

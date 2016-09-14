@@ -1,74 +1,61 @@
 package com.nemanjaasuv1912.diplomskirad.model;
 
-import com.nemanjaasuv1912.diplomskirad.helper.MyRealm;
+import com.nemanjaasuv1912.diplomskirad.model.base.Model;
 
-import io.realm.Realm;
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by nemanjamarkicevic on 8/8/16.
  */
-public class Student extends RealmObject {
+public class Student extends Model<Student> {
 
-    @PrimaryKey
+    public static Student sharedStudent;
+
+    private int id;
     private String username;
     private String password;
     private String fullname;
     private String universityName;
-    private String year;
-    private String birtday;
-    private String aboutme;
+    private int year;
+    private String birthdate;
+    private String aboutMe;
     private String email;
-    private String imageUrl;
 
-    public static Student getStudentFromDatabase(){
-            return getStudentFromDatabase(MyRealm.getRealm());
+    public static void parse(String jsonString){
+        Student.sharedStudent = new Student(jsonString);
     }
 
-    private static Student getStudentFromDatabase(Realm realm){
-        Student student = realm.where(Student.class).findFirst();
-
-        if(student == null){
-            realm.beginTransaction();
-            student = realm.createObject(Student.class);
-
-            student.username = "";
-            student.password = "";
-            student.fullname = "";
-            student.universityName = "";
-            student.year = "";
-            student.birtday = "";
-            student.aboutme = "";
-            student.email = "";
-            student.imageUrl = "";
-
-            realm.commitTransaction();
-        }
-
-        return student;
+    public Student(int id, String username) {
+        this.id         = id;
+        this.username   = username;
+        fullname        = "";
+        email           = "";
+        birthdate       = "";
+        aboutMe         = "";
+        year            = 0;
+        universityName  = "";
     }
 
-    public static void updateStudentInDatabaseAsync(final Student newProfile){
-        MyRealm.getRealm().executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                Student student = getStudentFromDatabase(realm);
-                University university = University.getUniversityFromDatabase(realm);
+    public Student(String jsonString) {
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
 
-                student.username = newProfile.username;
-                student.password = newProfile.password;
-                student.fullname = newProfile.fullname;
-                student.aboutme = newProfile.aboutme;
-                student.birtday = newProfile.birtday;
-                student.year = newProfile.year;
-                student.email = newProfile.email;
-                student.universityName = newProfile.universityName;
-                student.imageUrl = newProfile.imageUrl;
+            id          = jsonObject.getInt(ID_KEY);
+            username    = jsonObject.getString(USERNAME_KEY);
+            fullname    = jsonObject.getString(FULLNAME_KEY);
+            email       = jsonObject.getString(EMAIL_KEY);
+            birthdate   = jsonObject.getString(BIRTHDATE_KEY);
+            aboutMe     = jsonObject.getString(ABOUT_KEY);
+            year        = jsonObject.getInt(YEAR_KEY);
 
-                university.setName(newProfile.universityName);
-            }
-        });
+
+            JSONObject universityJsonObject = jsonObject.getJSONObject(UNIVERSITY_KEY);
+            universityName = universityJsonObject.getString(University.NAME_KEY);
+
+            Student.sharedStudent = this;
+
+        } catch (JSONException ignored) {}
     }
 
     public String getEmail() {
@@ -83,68 +70,55 @@ public class Student extends RealmObject {
         return username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public String getFullname() {
         return fullname;
     }
 
-    public University getUniversity() {
-        return University.getUniversityFromDatabase();
-    }
-
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 
-    public String getBirtday() {
-        return birtday;
+    public String getYearAsString(){
+        return year + "";
     }
 
-    public String getAboutme() {
-        return aboutme;
+    public String getBirthdate() {
+        return birthdate;
     }
 
-    public String getImageUrl(){
-        return imageUrl;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public String getAboutMe() {
+        return aboutMe;
     }
 
     public void setFullname(String fullname) {
         this.fullname = fullname;
     }
 
-    public void setUniversity(University university) {
-        this.universityName = university.getName();
-        University.updateUniveristyInDatabaseAsync(university);
-    }
-
-    public void setYear(String year) {
+    public void setYear(int year) {
         this.year = year;
     }
 
-    public void setBirtday(String birtday) {
-        this.birtday = birtday;
+    public void setBirthdate(String birtday) {
+        this.birthdate = birtday;
     }
 
-    public void setAboutme(String aboutme) {
-        this.aboutme = aboutme;
+    public void setAboutMe(String aboutMe) {
+        this.aboutMe = aboutMe;
     }
 
-    public void setImageUrl(String imageUrl){
-        this.imageUrl = imageUrl;
+    public int getId() {
+        return id;
     }
 
-    public void setUniversityName(String universityName) {
-        this.universityName = universityName;
+    public String getUniversityName() {
+        return universityName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

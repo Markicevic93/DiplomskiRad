@@ -1,166 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/profile_activity_background_color"
     tools:context="com.nemanjaasuv1912.diplomskirad.ui.activity.ProfileActivity">
 
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/profile_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:padding="20dp"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <!--enable dontAnimate on glide-->
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_civ_profile_picture"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            android:layout_gravity="center"
-            android:clickable="true"
-            android:src="@drawable/university_placeholder"
-            android:onClick="imageOnClick"/>
-
-        <android.support.v4.widget.Space
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/profile_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="25dp" />
-
-        <TextView
-            android:id="@+id/profile_tv_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"/>
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="15dp" />
-
-        <TextView
-            android:id="@+id/profile_tv_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:alpha="0.8"
-            android:textColor="@android:color/white" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/profile_til_fullname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@android:color/white">
-
-            <EditText
-                android:id="@+id/profile_et_fullname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/white"
-                android:gravity="center_vertical"
-                android:hint="@string/profile_edittext_fullname_placeholder"
-                android:textColor="@android:color/white" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:padding="20dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_civ_profile_picture"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:src="@drawable/profile_placeholder"/>
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+            <TextView
+                android:id="@+id/profile_tv_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"/>
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+            <TextView
+                android:id="@+id/profile_tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:alpha="0.8"
+                android:textColor="@android:color/white" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+            <TextView
+                android:id="@+id/profile_tv_university"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:alpha="0.8"
+                android:textColor="@android:color/white" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/profile_til_university"
-                android:layout_width="0dp"
+                android:id="@+id/profile_til_fullname"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.7"
                 android:textColorHint="@android:color/white">
 
-                <EditText
-                    android:id="@+id/profile_et_university"
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/profile_et_fullname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@android:color/white"
                     android:gravity="center_vertical"
-                    android:hint="@string/profile_edittext_university_placeholder"
+                    android:hint="@string/profile_edittext_fullname_placeholder"
                     android:textColor="@android:color/white" />
+
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/profile_til_year"
-                android:layout_width="0dp"
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.3"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/profile_til_birthday"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.7"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@android:color/white">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/profile_et_birthday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@android:color/white"
+                        android:gravity="center_vertical"
+                        android:hint="@string/profile_edittext_birthday_placeholder"
+                        android:textColor="@android:color/white" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/profile_til_year"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:textColorHint="@android:color/white">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/profile_et_year"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@android:color/white"
+                        android:gravity="center_vertical"
+                        android:inputType="textFilter|number"
+                        android:digits="1234"
+                        android:maxLength="1"
+                        android:hint="@string/profile_edittext_year_placeholder"
+                        android:textColor="@android:color/white" />
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/profile_til_about_me"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:textColorHint="@android:color/white">
 
-                <EditText
-                    android:id="@+id/profile_et_year"
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/profile_et_about_me"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:backgroundTint="@android:color/white"
                     android:gravity="center_vertical"
-                    android:hint="@string/profile_edittext_year_placeholder"
+                    android:hint="@string/profile_edittext_about_me_placeholder"
                     android:textColor="@android:color/white" />
 
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/profile_til_birthday"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@android:color/white">
-
-            <EditText
-                android:id="@+id/profile_et_birthday"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/white"
-                android:gravity="center_vertical"
-                android:hint="@string/profile_edittext_birthday_placeholder"
-                android:textColor="@android:color/white" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/profile_til_about_me"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColorHint="@android:color/white">
-
-            <EditText
-                android:id="@+id/profile_et_about_me"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTint="@android:color/white"
-                android:gravity="center_vertical"
-                android:hint="@string/profile_edittext_about_me_placeholder"
-                android:textColor="@android:color/white" />
-
-        </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/profile_logout_button_title"
+        android:padding="30dp"
+        android:background="@null"
+        android:textColor="@color/colorAccent"
+        android:onClick="logoutOnClick"
+        android:layout_gravity="bottom|center"/>
+</FrameLayout>
+

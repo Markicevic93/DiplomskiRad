@@ -11,10 +11,10 @@ public class Constants {
     public static final int PASSWORD_MAX_LENGHT = 15;
 
     //Main
-    public static final int SUBJECTS_GRID_COLUMS = 2;
+    public static final int GROUP_GRID_COLUMS = 2;
 
     //Intent extras keys
-    public static final String SUBJECT_NAME_KEY = "intentSubjectNameKey";
-    public static final String SUBJECT_POST_NAME_KEY = "intentSubjectItemNameKey";
+    public static final String GROUP_ID_KEY = "intentGroupIdKey";
+    public static final String POST_ID_KEY = "intentGroupPostIdKey";
 
 }

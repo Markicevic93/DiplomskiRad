@@ -1,14 +1,10 @@
 package com.nemanjaasuv1912.diplomskirad.ui.activity.base;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-
-import com.nemanjaasuv1912.diplomskirad.R;
-import com.nemanjaasuv1912.diplomskirad.ui.activity.SignupActivity;
 
 /**
  * Created by nemanjamarkicevic on 8/14/16.
@@ -16,6 +12,7 @@ import com.nemanjaasuv1912.diplomskirad.ui.activity.SignupActivity;
 public class BaseActivity extends AppCompatActivity {
 
     protected Toolbar toolbar;
+    protected final BaseActivity activity = this;
 
     protected void setIconForMenuItem(MenuItem item, int drawableId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -25,7 +22,7 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void startActivity(Class<?> cls){
+    protected void startActivity(final Class<?> cls){
         Intent intent = new Intent(this, cls);
         startActivity(intent);
     }

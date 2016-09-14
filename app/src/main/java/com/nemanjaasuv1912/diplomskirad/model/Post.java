@@ -1,100 +1,74 @@
 package com.nemanjaasuv1912.diplomskirad.model;
 
-import com.nemanjaasuv1912.diplomskirad.helper.MyRealm;
+import android.util.Log;
 
+import com.nemanjaasuv1912.diplomskirad.model.base.Model;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
-
-import io.realm.Realm;
-import io.realm.RealmList;
-import io.realm.RealmObject;
+import java.util.Comparator;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by nemanjamarkicevic on 8/7/16.
  */
-public class Post extends RealmObject {
+public class Post extends Model<Post> {
 
+    private int id;
     private String title;
     private String text;
-    private Boolean tagExam;
-    private Boolean tagHomework;
-    private Boolean tagTest;
-    private String created;
-    private String updated;
-    private RealmList<Comment> comments;
+    private Student student;
+    private Calendar created;
+    private Calendar updated;
+    private ArrayList<Comment> comments;
 
-    public Post(){
-        title = "";
-        text = "";
-        created = "";
-        updated = "";
-        tagExam = false;
-        tagHomework = false;
-        tagTest = false;
-        comments =  new RealmList<>();
+    public static Post parse(String jsonString) {
+        return new Post(jsonString);
     }
 
-    public Post(String title, String text){
-        this.title = title;
-        this.text = text;
-        created = "";
-        updated = "";
-        tagExam = false;
-        tagHomework = false;
-        tagTest = false;
-        comments =  new RealmList<>();
-    }
+    public void parseComments(String jsonString) {
+        comments = new ArrayList<>();
 
-    public Post(Post item){
-        title = item.getTitle();
-        text = item.getText();
-        tagExam = item.isTagExam();
-        tagHomework = item.isTagHomework();
-        tagTest = item.isTagTest();
-        comments =  item.getComments();
-    }
+        try {
+            JSONArray jsonarray = new JSONArray(jsonString);
 
-    public static Post getPostFromDatabase(String name){
-        return getPostFromDatabase(MyRealm.getRealm(), name);
-    }
-
-    public static Post getPostFromDatabase(Realm realm, String title){
-        Post post = realm.where(Post.class).equalTo("title",title).findFirst();
-
-        if(post == null){
-            realm.beginTransaction();
-            post = realm.createObject(Post.class);
-
-            post.title = "";
-            post.text = "";
-            post.created = "";
-            post.updated = "";
-            post.tagExam = false;
-            post.tagHomework = false;
-            post.tagTest = false;
-            post.comments =  new RealmList<>();
-
-            realm.commitTransaction();
+            for (int i = 0; i < jsonarray.length(); i++) {
+                addComment(Comment.parse(jsonarray.getJSONObject(i).toString()));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
-        return post;
-    }
-
-    public static void updatePostInDatabaseAsync(final Post newPost) {
-        MyRealm.getRealm().executeTransactionAsync(new Realm.Transaction() {
+        Collections.sort(comments, new Comparator<Comment>(){
             @Override
-            public void execute(Realm realm) {
-                Post post = getPostFromDatabase(realm,newPost.title);
-
-                post.title = newPost.title;
-                post.tagExam = newPost.tagExam;
-                post.tagHomework = newPost.tagHomework;
-                post.tagTest = newPost.tagTest;
-                post.created = newPost.created;
-                post.updated = newPost.updated;
-
-                Collections.copy(post.comments, newPost.comments);
+            public int compare(Comment lhs, Comment rhs) {
+                return lhs.getUpdated().compareTo(rhs.getUpdated());
             }
         });
+    }
+
+    public Post(String jsonString){
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
+
+            id          = jsonObject.getInt(ID_KEY);
+            title       = jsonObject.getString(TITLE_KEY);
+            text        = jsonObject.getString(TEXT_KEY);
+            updated     = Calendar.getInstance();
+            created     = Calendar.getInstance();
+            updated.setTimeInMillis(TimeUnit.SECONDS.toMillis(jsonObject.getInt(DATE_UPADTED_KEY)));
+            created.setTimeInMillis(TimeUnit.SECONDS.toMillis(jsonObject.getInt(DATE_CREATED_KEY)));
+            comments    = new ArrayList<>();
+
+            JSONObject studentJsonObject = jsonObject.getJSONObject(STUDENT_KEY);
+            student = new Student(studentJsonObject.getInt(ID_KEY),studentJsonObject.getString(USERNAME_KEY));
+
+        } catch (JSONException ignored) {}
     }
 
     public String getTitle() {
@@ -105,20 +79,8 @@ public class Post extends RealmObject {
         return text;
     }
 
-    public RealmList<Comment> getComments() {
+    public ArrayList<Comment> getComments() {
         return comments;
-    }
-
-    public Boolean isTagExam() {
-        return tagExam;
-    }
-
-    public Boolean isTagHomework() {
-        return tagHomework;
-    }
-
-    public Boolean isTagTest() {
-        return tagTest;
     }
 
     public void setTitle(String title) {
@@ -129,23 +91,19 @@ public class Post extends RealmObject {
         this.text = text;
     }
 
-    public void setTagExam(Boolean tagExam) {
-        this.tagExam = tagExam;
-    }
-
-    public void setTagHomework(Boolean tagHomework) {
-        this.tagHomework = tagHomework;
-    }
-
-    public void setTagTest(Boolean tagTest) {
-        this.tagTest = tagTest;
-    }
-
-    public void setComments(RealmList<Comment> comments) {
+    public void setComments(ArrayList<Comment> comments) {
         this.comments = comments;
     }
 
     public void addComment(Comment comment) {
-        comments.add(comment);
+        comments.add(0, comment);
+    }
+
+    public Calendar getUpdated() {
+        return updated;
+    }
+
+    public int getId() {
+        return id;
     }
 }

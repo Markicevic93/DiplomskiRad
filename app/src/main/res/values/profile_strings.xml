@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="profile_edittext_fullname_placeholder">FULL NAME</string>
-    <string name="profile_edittext_university_placeholder">UNIVERSITY</string>
-    <string name="profile_edittext_year_placeholder">YEAR</string>
-    <string name="profile_edittext_birthday_placeholder">BIRTHDAY</string>
-    <string name="profile_edittext_about_me_placeholder">ABOUT ME</string>
+    <string name="profile_edittext_fullname_placeholder">Full name</string>
+    <string name="profile_edittext_year_placeholder">Year</string>
+    <string name="profile_edittext_birthday_placeholder">Birthday</string>
+    <string name="profile_edittext_about_me_placeholder">About me</string>
+    <string name="profile_logout_button_title">LOGOUT</string>
 
 </resources>

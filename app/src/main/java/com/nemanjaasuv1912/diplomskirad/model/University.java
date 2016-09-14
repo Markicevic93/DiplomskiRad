@@ -1,100 +1,98 @@
 package com.nemanjaasuv1912.diplomskirad.model;
 
-import com.nemanjaasuv1912.diplomskirad.helper.MyRealm;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Collections;
-
-import io.realm.Realm;
-import io.realm.RealmList;
-import io.realm.RealmObject;
+import java.util.Comparator;
 
 /**
  * Created by nemanjamarkicevic on 8/7/16.
  */
-public class University extends RealmObject {
+public class University {
 
+    public static University sharedUniversity;
+
+    public static final String ID_KEY = "id";
+    public static final String NAME_KEY = "name";
+    public static final String EMAIL_SUFIX_KEY = "email_sufix";
+    public static final String IMAGE_URL_KEY = "image_url";
+    public static final String ADDRESS_KEY = "address";
+
+    private int id;
     private String name;
-    private RealmList<Subject> subjects;
+    private ArrayList<Group> groups;
     private String emailSufix;
     private String imageUrl;
+    private String address;
 
-    public University(){
-        name = "";
-        emailSufix = "";
-        imageUrl = "";
-        subjects = new RealmList<>();
+
+    public static void parse(String jsonString) {
+        University.sharedUniversity = new University(jsonString);
     }
 
-    public University(University university) {
-        name = university.name;
-        emailSufix = university.emailSufix;
-        imageUrl = university.imageUrl;
+    public University(String jsonString){
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
 
-        subjects = new RealmList<>();
-        Collections.copy(this.subjects,university.getSubjects());
+            id          = jsonObject.getInt(ID_KEY);
+            name        = jsonObject.getString(NAME_KEY);
+            emailSufix  = jsonObject.getString(EMAIL_SUFIX_KEY);
+            imageUrl    = jsonObject.getString(IMAGE_URL_KEY);
+            address     = jsonObject.getString(ADDRESS_KEY);
+            groups = new ArrayList<>();
+        } catch (JSONException ignored) {}
+
+        University.sharedUniversity = this;
     }
 
-    public static University getUniversityFromDatabase(){
-        return getUniversityFromDatabase(MyRealm.getRealm());
-    }
+    public void parseSubjects(String jsonString){
+        groups = new ArrayList<>();
 
-    public static University getUniversityFromDatabase(Realm realm) {
-        University university = realm.where(University.class).findFirst();
+        try {
+            JSONArray jsonarray = new JSONArray(jsonString);
 
-        if(university == null){
-            realm.beginTransaction();
-            university = realm.createObject(University.class);
-
-            university.name = "";
-            university.emailSufix = "";
-            university.imageUrl = "";
-            university.subjects = new RealmList<>();
-
-            realm.commitTransaction();
+            for (int i = 0; i < jsonarray.length(); i++) {
+                addSubject(Group.parse(jsonarray.getJSONObject(i).toString()));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
-        return university;
-    }
-
-    public static void updateUniveristyInDatabaseAsync(final University newUniversity){
-        MyRealm.getRealm().executeTransactionAsync(new Realm.Transaction() {
+        Collections.sort(groups, new Comparator<Group>(){
             @Override
-            public void execute(Realm realm) {
-                University university = realm.where(University.class).findFirst();
-
-                if(university == null){
-                    university = realm.createObject(University.class);
-                }
-
-                university.name = newUniversity.name;
-                university.emailSufix = newUniversity.emailSufix;
-                university.imageUrl = newUniversity.imageUrl;
-
-                for (Subject subject : newUniversity.subjects){
-                    Subject.updateSubjectInDatabaseAsync(subject);
+            public int compare(Group lhs, Group rhs) {
+                if(lhs.getYear() == rhs.getYear()){
+                    return  0;
+                }else if(lhs.getYear() < rhs.getYear()){
+                    return  -1;
+                }else{
+                    return  1;
                 }
             }
         });
     }
 
-    public RealmList<Subject> getSubjects() {
-        return subjects;
+    public ArrayList<Group> getGroup() {
+        return groups;
     }
 
-    public void addSubject(Subject subject){
-        this.subjects.add(subject);
+    public void addSubject(Group group){
+        this.groups.add(group);
     }
 
-    public RealmList<Subject> getSelectedSubjects() {
-        RealmList<Subject> selectedSubjects = new RealmList<>();
+    public ArrayList<Group> getSelectedGroups() {
+        ArrayList<Group> selectedGroups = new ArrayList<>();
 
-        for(Subject subject : subjects){
-            if(subject.isSelected()){
-                selectedSubjects.add(subject);
+        for(Group group : groups){
+            if(group.isSelected()){
+                selectedGroups.add(group);
             }
         }
 
-        return selectedSubjects;
+        return selectedGroups;
     }
 
     public String getName() {
@@ -111,5 +109,23 @@ public class University extends RealmObject {
 
     public void setName(String name){
         this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public Group getGroup(int groupId) {
+        for (Group group : groups){
+            if(group.getId() == groupId){
+                return group;
+            }
+        }
+
+        return null;
     }
 }
