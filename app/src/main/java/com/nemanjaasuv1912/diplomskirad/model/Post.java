@@ -1,13 +1,12 @@
 package com.nemanjaasuv1912.diplomskirad.model;
 
-import android.util.Log;
-
-import com.nemanjaasuv1912.diplomskirad.model.base.Model;
+import com.nemanjaasuv1912.diplomskirad.model.base.modelKeys;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -17,13 +16,12 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by nemanjamarkicevic on 8/7/16.
  */
-public class Post extends Model<Post> {
+public class Post implements modelKeys {
 
     private int id;
     private String title;
     private String text;
     private Student student;
-    private Calendar created;
     private Calendar updated;
     private ArrayList<Comment> comments;
 
@@ -44,7 +42,7 @@ public class Post extends Model<Post> {
             e.printStackTrace();
         }
 
-        Collections.sort(comments, new Comparator<Comment>(){
+        Collections.sort(comments, new Comparator<Comment>() {
             @Override
             public int compare(Comment lhs, Comment rhs) {
                 return lhs.getUpdated().compareTo(rhs.getUpdated());
@@ -52,23 +50,22 @@ public class Post extends Model<Post> {
         });
     }
 
-    public Post(String jsonString){
+    public Post(String jsonString) {
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
 
-            id          = jsonObject.getInt(ID_KEY);
-            title       = jsonObject.getString(TITLE_KEY);
-            text        = jsonObject.getString(TEXT_KEY);
-            updated     = Calendar.getInstance();
-            created     = Calendar.getInstance();
+            id = jsonObject.getInt(ID_KEY);
+            title = jsonObject.getString(TITLE_KEY);
+            text = jsonObject.getString(TEXT_KEY);
+            updated = Calendar.getInstance();
             updated.setTimeInMillis(TimeUnit.SECONDS.toMillis(jsonObject.getInt(DATE_UPADTED_KEY)));
-            created.setTimeInMillis(TimeUnit.SECONDS.toMillis(jsonObject.getInt(DATE_CREATED_KEY)));
-            comments    = new ArrayList<>();
+            comments = new ArrayList<>();
 
             JSONObject studentJsonObject = jsonObject.getJSONObject(STUDENT_KEY);
-            student = new Student(studentJsonObject.getInt(ID_KEY),studentJsonObject.getString(USERNAME_KEY));
+            student = new Student(studentJsonObject.getInt(ID_KEY), studentJsonObject.getString(USERNAME_KEY));
 
-        } catch (JSONException ignored) {}
+        } catch (JSONException ignored) {
+        }
     }
 
     public String getTitle() {
@@ -91,10 +88,6 @@ public class Post extends Model<Post> {
         this.text = text;
     }
 
-    public void setComments(ArrayList<Comment> comments) {
-        this.comments = comments;
-    }
-
     public void addComment(Comment comment) {
         comments.add(0, comment);
     }
@@ -105,5 +98,17 @@ public class Post extends Model<Post> {
 
     public int getId() {
         return id;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public String getUpdatedDate() {
+        return new SimpleDateFormat("dd-MM-yy").format(updated.getTime());
+    }
+
+    public String getUpdatedTime() {
+        return new SimpleDateFormat("hh:mm").format(updated.getTime());
     }
 }

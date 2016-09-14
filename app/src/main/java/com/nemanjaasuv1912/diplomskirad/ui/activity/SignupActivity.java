@@ -1,19 +1,22 @@
 package com.nemanjaasuv1912.diplomskirad.ui.activity;
 
+import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.nemanjaasuv1912.diplomskirad.R;
-import com.nemanjaasuv1912.diplomskirad.helper.RequestManager;
+import com.nemanjaasuv1912.diplomskirad.helper.alert.AlerDialog;
+import com.nemanjaasuv1912.diplomskirad.helper.alert.AlertType;
+import com.nemanjaasuv1912.diplomskirad.helper.api.RequestManager;
 import com.nemanjaasuv1912.diplomskirad.helper.validator.EmailValidator;
 import com.nemanjaasuv1912.diplomskirad.helper.validator.PasswordValidator;
 import com.nemanjaasuv1912.diplomskirad.helper.validator.UsernameValidator;
 import com.nemanjaasuv1912.diplomskirad.helper.validator.YearValidator;
 import com.nemanjaasuv1912.diplomskirad.model.Student;
 import com.nemanjaasuv1912.diplomskirad.model.University;
-import com.nemanjaasuv1912.diplomskirad.ui.activity.base.BaseActivity;
+import com.nemanjaasuv1912.diplomskirad.ui.activity.base.ProgressBarActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,7 +25,7 @@ import java.io.IOException;
 
 import okhttp3.Response;
 
-public class SignupActivity extends BaseActivity{
+public class SignupActivity extends ProgressBarActivity {
 
     private TextInputLayout tilUsername, tilPassword, tilEmail, tilYear;
     private TextInputEditText etUsername, etPassword, etEmail, etYear;
@@ -34,6 +37,7 @@ public class SignupActivity extends BaseActivity{
 
         setToolbar(R.id.signup_toolbar, getString(R.string.signup_toolbar_title));
 
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         tilUsername = (TextInputLayout) findViewById(R.id.signup_til_username);
         tilPassword = (TextInputLayout) findViewById(R.id.signup_til_password);
         tilEmail = (TextInputLayout) findViewById(R.id.signup_til_email);
@@ -46,38 +50,58 @@ public class SignupActivity extends BaseActivity{
     }
 
     public void nextOnClick(View view) {
-        if(credentialsValid()){
+        tilEmail.setErrorEnabled(false);
+
+        if (credentialsValid() && !progressBarVisible()) {
             getUniversity();
         }
     }
 
     private void getUniversity() {
+        showProgressBar();
         new RequestManager() {
+
             @Override
             protected void onResponse(boolean isSuccessful, Response response) {
-                if(isSuccessful){
+                hideProgressBar();
+                if (isSuccessful) {
                     try {
                         new University(response.body().string());
                         signupStudent();
-                    } catch (IOException ignored) {}
-                }else{
-                    showBadEmailError();
+                    } catch (IOException ignored) {
+                    }
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showBadEmailError();
+                        }
+                    });
                 }
             }
 
             @Override
             protected void onFailure() {
-                showBadEmailError();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        hideProgressBar();
+                        AlerDialog.showAlert(context, AlertType.REQUEST_ERROR);
+                    }
+                });
             }
 
         }.getUniversity(etEmail.getText().toString());
     }
 
-    private void signupStudent(){
-        new RequestManager(){
+    private void signupStudent() {
+        showProgressBar();
+        new RequestManager() {
+
             @Override
             protected void onResponse(boolean isSuccessful, Response response) {
-                if(isSuccessful) {
+                hideProgressBar();
+                if (isSuccessful) {
                     try {
                         String body = response.body().string();
                         Student.parse(body);
@@ -90,44 +114,42 @@ public class SignupActivity extends BaseActivity{
                                 startActivity(MainActivity.class);
                             }
                         });
-                    } catch (IOException ignored) {
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    } catch (IOException | JSONException ignored) {
                     }
-                }else{
-                    showUsernameExistError();
+                } else {
+                    hideProgressBar();
+                    showEmailExistError();
                 }
             }
 
             @Override
             protected void onFailure() {
-                showUsernameExistError();
+                hideProgressBar();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        AlerDialog.showAlert(context, AlertType.REQUEST_ERROR);
+                    }
+                });
             }
         }.register(etUsername.getText().toString(), etPassword.getText().toString(),
                 etEmail.getText().toString(), etYear.getText().toString());
     }
 
-    private void showBadEmailError(){
-        final SignupActivity signupActivity = this;
+    private void showBadEmailError() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                tilEmail.setErrorEnabled(false);
-                tilEmail.setErrorEnabled(true);
-                tilEmail.setError(signupActivity.getString(R.string.email_bad));
+                tilEmail.setError(context.getString(R.string.email_bad));
             }
         });
     }
 
-    private void showUsernameExistError(){
-        final SignupActivity signupActivity = this;
+    private void showEmailExistError() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                tilUsername.setErrorEnabled(false);
-                tilUsername.setErrorEnabled(true);
-                tilUsername.setError(signupActivity.getString(R.string.username_exists));
+                tilEmail.setError(context.getString(R.string.email_exists));
             }
         });
     }

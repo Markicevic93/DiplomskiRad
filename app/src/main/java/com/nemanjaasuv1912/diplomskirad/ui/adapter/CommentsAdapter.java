@@ -18,7 +18,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
     private ArrayList<Comment> comments;
 
-    public CommentsAdapter(ArrayList<Comment> comments){
+    public CommentsAdapter(ArrayList<Comment> comments) {
         this.comments = comments;
     }
 
@@ -33,10 +33,10 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     public void onBindViewHolder(CommentViewHolder holder, int position) {
         Comment comment = comments.get(position);
 
-        holder.tvCommentUsername.setText(comment.getStudent().getUsername());
-        holder.tvCommentText.setText(comment.getText());
-        holder.tvCommentUpdatedDate.setText(comment.getUpdatedDate());
-        holder.tvCommentUpdatedTime.setText(comment.getUpdatedTime());
+        holder.tvUsername.setText(comment.getStudent().getUsername());
+        holder.tvUpdatedDate.setText(comment.getUpdatedDate());
+        holder.tvUpdatedTime.setText(comment.getUpdatedTime());
+        holder.tvText.setText(comment.getText());
     }
 
     @Override
@@ -46,18 +46,15 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
     public class CommentViewHolder extends RecyclerView.ViewHolder {
 
-        protected TextView tvCommentUsername;
-        protected TextView tvCommentText;
-        protected TextView tvCommentUpdatedDate;
-        protected TextView tvCommentUpdatedTime;
+        protected TextView tvUsername, tvText, tvUpdatedDate, tvUpdatedTime;
 
         public CommentViewHolder(View v) {
             super(v);
 
-            tvCommentUsername =  (TextView) v.findViewById(R.id.post_comment_username);
-            tvCommentText =  (TextView) v.findViewById(R.id.post_comment_text);
-            tvCommentUpdatedDate = (TextView)  v.findViewById(R.id.post_comment_updated_date);
-            tvCommentUpdatedTime = (TextView)  v.findViewById(R.id.post_comment_updated_time);
+            tvUpdatedDate = (TextView) v.findViewById(R.id.comment_updated_date);
+            tvUpdatedTime = (TextView) v.findViewById(R.id.comment_updated_time);
+            tvUsername = (TextView) v.findViewById(R.id.comment_username);
+            tvText = (TextView) v.findViewById(R.id.comment_text);
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.nemanjaasuv1912.diplomskirad.ui.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -12,7 +11,9 @@ import android.widget.TextView;
 
 import com.nemanjaasuv1912.diplomskirad.R;
 import com.nemanjaasuv1912.diplomskirad.helper.Constants;
-import com.nemanjaasuv1912.diplomskirad.helper.RequestManager;
+import com.nemanjaasuv1912.diplomskirad.helper.alert.AlerDialog;
+import com.nemanjaasuv1912.diplomskirad.helper.alert.AlertType;
+import com.nemanjaasuv1912.diplomskirad.helper.api.RequestManager;
 import com.nemanjaasuv1912.diplomskirad.helper.validator.EmptyEditTextValidator;
 import com.nemanjaasuv1912.diplomskirad.model.Comment;
 import com.nemanjaasuv1912.diplomskirad.model.Post;
@@ -42,19 +43,12 @@ public class PostActivity extends BaseActivity {
 
         setToolbar(R.id.post_toolbar, post.getTitle());
 
-        recyclerView = (RecyclerView) findViewById(R.id.post_rv_comments);
         tvPostText = (TextView) findViewById(R.id.post_text);
         etComment = (EditText) findViewById(R.id.post_comment_et);
-
-        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
-        itemAnimator.setAddDuration(1000);
-        itemAnimator.setRemoveDuration(1000);
-        recyclerView.setItemAnimator(itemAnimator);
-
+        recyclerView = (RecyclerView) findViewById(R.id.post_rv_comments);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         tvPostText.setText(post.getText());
-
         etComment.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -89,10 +83,11 @@ public class PostActivity extends BaseActivity {
 
 
     private void getComments() {
-        new RequestManager(){
+        new RequestManager() {
+
             @Override
             protected void onResponse(boolean isSuccessful, Response response) {
-                if (isSuccessful){
+                if (isSuccessful) {
                     try {
                         post.parseComments(response.body().string());
 
@@ -111,17 +106,15 @@ public class PostActivity extends BaseActivity {
             @Override
             protected void onFailure() {
             }
-        }.getStudentForPost(post.getId());
+        }.getCommentsForPost(post.getId());
     }
 
     public void sendCommentOnClick(View view) {
-        if(EmptyEditTextValidator.isValid(etComment.getText().toString())){
-            new RequestManager(){
-
+        if (EmptyEditTextValidator.isValid(etComment, getResources().getString(R.string.comment_empty))) {
+            new RequestManager() {
                 @Override
                 protected void onResponse(boolean isSuccessful, Response response) {
-
-                    if(isSuccessful){
+                    if (isSuccessful) {
                         try {
                             post.addComment(Comment.parse(response.body().string()));
 
@@ -134,18 +127,29 @@ public class PostActivity extends BaseActivity {
                                     etComment.setText("");
                                 }
                             });
-                        } catch (IOException ignored) {}
+                        } catch (IOException ignored) {
+                        }
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AlerDialog.showAlert(context, AlertType.ADD_COMMENT_FAILED);
+                            }
+                        });
                     }
                 }
 
                 @Override
                 protected void onFailure() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            AlerDialog.showAlert(context, AlertType.REQUEST_ERROR);
+                        }
+                    });
 
                 }
             }.sendComment(etComment.getText().toString(), post.getId());
-        }else{
-            etComment.setError(getResources().getString(R.string.comment_empty));
         }
-
     }
 }

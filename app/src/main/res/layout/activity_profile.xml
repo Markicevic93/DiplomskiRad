@@ -17,9 +17,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
+        <ProgressBar
+            android:id="@id/progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ProgressBarStyle"/>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:padding="20dp"
+            android:padding="16dp"
             android:orientation="vertical"
             android:layout_height="wrap_content">
 
@@ -33,7 +39,7 @@
 
             <android.support.v4.widget.Space
                 android:layout_width="match_parent"
-                android:layout_height="15dp" />
+                android:layout_height="10dp" />
 
             <TextView
                 android:id="@+id/profile_tv_username"
@@ -57,7 +63,7 @@
 
             <android.support.v4.widget.Space
                 android:layout_width="match_parent"
-                android:layout_height="15dp" />
+                android:layout_height="10dp" />
 
             <TextView
                 android:id="@+id/profile_tv_university"
@@ -163,14 +169,21 @@
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/profile_logout_button_title"
-        android:padding="30dp"
-        android:background="@null"
-        android:textColor="@color/colorAccent"
-        android:onClick="logoutOnClick"
-        android:layout_gravity="bottom|center"/>
+        android:background="@color/colorPrimary"
+        android:layout_gravity="bottom">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_logout_button_title"
+            android:padding="30dp"
+            android:background="@null"
+            android:textColor="@color/colorAccent"
+            android:layout_gravity="center"
+            android:onClick="logoutOnClick"/>
+    </FrameLayout>
 </FrameLayout>
 

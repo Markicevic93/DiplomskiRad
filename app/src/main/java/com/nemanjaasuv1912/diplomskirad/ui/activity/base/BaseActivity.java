@@ -1,7 +1,9 @@
 package com.nemanjaasuv1912.diplomskirad.ui.activity.base;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -11,39 +13,45 @@ import android.view.MenuItem;
  */
 public class BaseActivity extends AppCompatActivity {
 
+    protected Context context;
     protected Toolbar toolbar;
-    protected final BaseActivity activity = this;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        context = this;
+    }
 
     protected void setIconForMenuItem(MenuItem item, int drawableId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             item.setIcon(getResources().getDrawable(drawableId, null));
-        }else {
+        } else {
             item.setIcon(getResources().getDrawable(drawableId));
         }
     }
 
-    protected void startActivity(final Class<?> cls){
+    protected void startActivity(final Class<?> cls) {
         Intent intent = new Intent(this, cls);
         startActivity(intent);
     }
 
-    protected void setToolbar(int toolbarId){
+    protected void setToolbar(int toolbarId) {
         setToolbar(toolbarId, "");
     }
 
-    protected void setToolbar(int toolbarId,String toolbarTitle){
+    protected void setToolbar(int toolbarId, String toolbarTitle) {
         setToolbar(toolbarId, toolbarTitle, 0);
     }
 
-    protected void setToolbar(int toolbarId,String toolbarTitle,int toolbarIconId){
+    protected void setToolbar(int toolbarId, String toolbarTitle, int toolbarIconId) {
         toolbar = (Toolbar) findViewById(toolbarId);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(toolbarTitle);
 
-        if(toolbarIconId != 0){
+        if (toolbarIconId != 0) {
             toolbar.setNavigationIcon(toolbarIconId);
-        }else {
+        } else {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }

@@ -2,39 +2,66 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     android:background="@drawable/group_item_background">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
         android:layout_gravity="center"
-        android:padding="10dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/group_short_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
             android:layout_gravity="center"
+            android:gravity="center"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/group_new_items"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/group_name"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.3"
+            android:gravity="top|center"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:textColor="@android:color/darker_gray" />
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp" />
 
         <ImageView
-            android:id="@+id/group_color"
-            android:layout_width="25dp"
-            android:layout_height="5dp"
+            android:layout_width="30dp"
+            android:layout_height="4dp"
             android:layout_gravity="center"
-            android:layout_marginTop="25dp"
-            android:background="@android:color/holo_red_dark" />
+            android:background="@color/colorPrimary" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="top|end"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="@string/group_year"
+            android:paddingRight="5dp"
+            android:textColor="@android:color/darker_gray"/>
+
+        <TextView
+            android:id="@+id/group_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"/>
 
     </LinearLayout>
 </com.nemanjaasuv1912.diplomskirad.ui.view.SquareFrameLayout>

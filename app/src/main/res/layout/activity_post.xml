@@ -25,21 +25,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:textStyle="bold|italic"
+        android:gravity="center"
+        android:textSize="16sp"
         android:padding="10dp"
         android:text="@string/post_comments" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/post_rv_comments"
         android:layout_width="match_parent"
+        android:paddingLeft="15dp"
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorPrimary"/>
+        android:background="@android:color/darker_gray"/>
 
     <LinearLayout
         android:layout_width="match_parent"

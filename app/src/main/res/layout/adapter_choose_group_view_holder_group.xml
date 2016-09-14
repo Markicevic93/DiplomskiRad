@@ -3,15 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@drawable/group_item_background">
+    android:paddingLeft="10dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/group_color"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_gravity="center"
-        android:layout_margin="30dp"
-        android:src="@android:color/holo_red_dark" />
+        android:layout_margin="20dp"
+        android:src="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/group_fullname"

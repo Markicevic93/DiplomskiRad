@@ -11,10 +11,10 @@ import com.nemanjaasuv1912.diplomskirad.R;
  */
 public class UniversityValidator {
 
-    public static boolean isValid(final String university, final TextInputLayout tilUniversity){
+    public static boolean isValid(final String university, final TextInputLayout tilUniversity) {
         Context context = MyApplication.getContext();
 
-        if(university.trim().length() == 0){
+        if (university.trim().length() == 0) {
             tilUniversity.setError(context.getString(R.string.university_empty));
 
             return false;

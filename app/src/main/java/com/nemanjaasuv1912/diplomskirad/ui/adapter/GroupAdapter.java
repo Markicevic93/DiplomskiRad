@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nemanjaasuv1912.diplomskirad.MyApplication;
@@ -23,7 +22,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
 
     private ArrayList<Group> selectedGroups;
 
-    public GroupAdapter(ArrayList<Group> selectedGroups){
+    public GroupAdapter(ArrayList<Group> selectedGroups) {
         this.selectedGroups = selectedGroups;
     }
 
@@ -39,7 +38,8 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
         Group group = selectedGroups.get(position);
 
         holder.tvShortName.setText(group.getShortName());
-        holder.tvNewItems.setText(String.format(MyApplication.getContext().getString(R.string.newItems), group.getNewItemsCount()));
+        holder.tvYear.setText(group.getYearAsString());
+        holder.tvName.setText(group.getName());
     }
 
     @Override
@@ -49,17 +49,15 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
 
     public class GroupViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        protected TextView tvShortName;
-        protected TextView tvNewItems;
-        protected ImageView ivColor;
+        protected TextView tvShortName, tvName, tvYear;
 
         public GroupViewHolder(View v) {
             super(v);
             v.setOnClickListener(this);
 
-            tvShortName =  (TextView) v.findViewById(R.id.group_short_name);
-            tvNewItems = (TextView)  v.findViewById(R.id.group_new_items);
-            ivColor = (ImageView)  v.findViewById(R.id.group_color);
+            tvShortName = (TextView) v.findViewById(R.id.group_short_name);
+            tvName = (TextView) v.findViewById(R.id.group_name);
+            tvYear = (TextView) v.findViewById(R.id.group_year);
         }
 
         @Override
@@ -70,5 +68,4 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
             MyApplication.getContext().startActivity(intent);
         }
     }
-
 }

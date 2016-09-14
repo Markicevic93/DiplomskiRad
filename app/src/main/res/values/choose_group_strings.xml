@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="choose_groups_toolbar_title">SELECT GROUPS</string>
+    <!--Layout-->
+    <string name="choose_groups_toolbar_title">Choose groups</string>
+    <string name="year">YEAR</string>
 
 </resources>

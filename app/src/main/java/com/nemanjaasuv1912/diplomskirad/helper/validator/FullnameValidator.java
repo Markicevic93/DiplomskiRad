@@ -11,10 +11,10 @@ import com.nemanjaasuv1912.diplomskirad.R;
  */
 public class FullnameValidator {
 
-    public static boolean isValid(final String year, final TextInputLayout tilYear){
+    public static boolean isValid(final String year, final TextInputLayout tilYear) {
         Context context = MyApplication.getContext();
 
-        if(year.trim().length() == 0){
+        if (year.trim().length() == 0) {
             tilYear.setError(context.getString(R.string.fullname_empty));
 
             return false;

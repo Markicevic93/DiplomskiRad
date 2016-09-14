@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@android:color/white"
     tools:context="com.nemanjaasuv1912.diplomskirad.ui.activity.MainActivity">
 
     <android.support.v7.widget.Toolbar
@@ -12,10 +13,23 @@
         android:layout_height="wrap_content"
         style="@style/ToolbarWithColor"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/main_groups_rv"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:background="@android:color/white"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
 
+     <ProgressBar
+        android:visibility="visible"
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/ProgressBarStyle"/>
+
+      <android.support.v7.widget.RecyclerView
+            android:id="@+id/main_groups_rv"
+            android:layout_width="match_parent"
+            android:background="@android:color/white"
+            android:padding="5dp"
+            android:layout_height="match_parent"/>
+
+    </FrameLayout>
 </LinearLayout>

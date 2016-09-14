@@ -5,19 +5,23 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 
 import com.nemanjaasuv1912.diplomskirad.R;
-import com.nemanjaasuv1912.diplomskirad.helper.Constants;
-import com.nemanjaasuv1912.diplomskirad.helper.RequestManager;
+import com.nemanjaasuv1912.diplomskirad.helper.alert.AlerDialog;
+import com.nemanjaasuv1912.diplomskirad.helper.alert.AlertType;
+import com.nemanjaasuv1912.diplomskirad.helper.api.RequestManager;
 import com.nemanjaasuv1912.diplomskirad.model.University;
-import com.nemanjaasuv1912.diplomskirad.ui.activity.base.BaseActivity;
+import com.nemanjaasuv1912.diplomskirad.ui.activity.base.ProgressBarActivity;
 import com.nemanjaasuv1912.diplomskirad.ui.adapter.GroupAdapter;
 
 import java.io.IOException;
 
 import okhttp3.Response;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends ProgressBarActivity {
+
+    private static final int GROUP_GRID_COLUMS = 2;
 
     private RecyclerView rvGroups;
     private University university;
@@ -29,11 +33,11 @@ public class MainActivity extends BaseActivity {
 
         university = University.sharedUniversity;
 
-        rvGroups = (RecyclerView) findViewById(R.id.main_groups_rv);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, Constants.GROUP_GRID_COLUMS);
-        rvGroups.setLayoutManager(layoutManager);
+        setToolbar(R.id.main_toolbar, university.getName(), R.drawable.profile);
 
-        setToolbar(R.id.main_toolbar,university.getName(),R.drawable.profile);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        rvGroups = (RecyclerView) findViewById(R.id.main_groups_rv);
+        rvGroups.setLayoutManager(new GridLayoutManager(this, GROUP_GRID_COLUMS));
     }
 
     @Override
@@ -44,11 +48,13 @@ public class MainActivity extends BaseActivity {
     }
 
     private void getSubjects() {
-        new RequestManager(){
+        showProgressBar();
+        new RequestManager() {
 
             @Override
             protected void onResponse(boolean isSuccessful, Response response) {
-                if (isSuccessful){
+                hideProgressBar();
+                if (isSuccessful) {
                     try {
                         university.parseSubjects(response.body().string());
 
@@ -59,15 +65,15 @@ public class MainActivity extends BaseActivity {
                             }
                         });
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    } catch (IOException ignored) {
                     }
                 }
             }
 
             @Override
             protected void onFailure() {
-
+                hideProgressBar();
+                AlerDialog.showAlert(context, AlertType.REQUEST_ERROR);
             }
         }.getGroups(university.getId());
     }
@@ -88,15 +94,12 @@ public class MainActivity extends BaseActivity {
 
         if (id == android.R.id.home) {
             startActivity(ProfileActivity.class);
-
             return true;
-        }else if (id == R.id.action_add) {
+        } else if (id == R.id.action_add) {
             startActivity(ChooseGroupActivity.class);
-
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 }
