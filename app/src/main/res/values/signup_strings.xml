@@ -8,6 +8,6 @@
     <string name="signup_edittext_university_placeholder">University</string>
     <string name="signup_edittext_year_placeholder">Year</string>
     <string name="signup_button_next_text">Next</string>
-    <string name="signup_toolbar_title">New Account</string>
+    <string name="signup_toolbar_title">New account</string>
 
 </resources>

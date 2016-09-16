@@ -15,8 +15,6 @@ import com.nemanjaasuv1912.diplomskirad.ui.activity.PostActivity;
 
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 /**
  * Created by nemanjamarkicevic on 8/7/16.
  */
@@ -25,7 +23,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
     private ArrayList<Post> posts;
     private final int groupId;
 
-    public PostsAdapter(ArrayList<Post> posts, int groupId){
+    public PostsAdapter(ArrayList<Post> posts, int groupId) {
         this.posts = posts;
         this.groupId = groupId;
     }
@@ -41,7 +39,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
     public void onBindViewHolder(PostViewHolder holder, int position) {
         Post post = posts.get(position);
 
-        holder.tvPostItemTitle.setText(post.getTitle());
+        holder.tvTitle.setText(post.getTitle());
+        holder.tvUpdated.setText(post.getUpdatedTime() + " " + post.getUpdatedDate());
+        holder.tvCreator.setText(post.getStudent().getUsername());
     }
 
     @Override
@@ -51,16 +51,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
 
     public class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-
-        protected TextView tvPostItemTitle;
-        protected CircleImageView ivColor;
+        protected TextView tvTitle, tvUpdated, tvCreator;
 
         public PostViewHolder(View v) {
             super(v);
             v.setOnClickListener(this);
 
-            tvPostItemTitle =  (TextView) v.findViewById(R.id.post_item_title);
-            ivColor = (CircleImageView)  v.findViewById(R.id.post_item_color);
+            tvTitle = (TextView) v.findViewById(R.id.post_title);
+            tvUpdated = (TextView) v.findViewById(R.id.post_updated);
+            tvCreator = (TextView) v.findViewById(R.id.post_creator);
         }
 
         @Override
@@ -72,5 +71,4 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
             MyApplication.getContext().startActivity(intent);
         }
     }
-
 }

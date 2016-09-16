@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF3366</color>
     <color name="toolbar_background_color">@color/colorPrimary</color>
+    <color name="loader_background">#80000000</color>
 
     <!--Login-->
     <color name="button_signin_background_color_normal">#FF3366</color>

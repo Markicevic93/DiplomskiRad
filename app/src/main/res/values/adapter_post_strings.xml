@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Layout-->
+    <string name="post_created_by">created by</string>
+
+</resources>

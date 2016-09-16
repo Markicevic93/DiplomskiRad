@@ -4,16 +4,19 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.nemanjaasuv1912.diplomskirad.R;
 import com.nemanjaasuv1912.diplomskirad.helper.Constants;
-import com.nemanjaasuv1912.diplomskirad.helper.RequestManager;
+import com.nemanjaasuv1912.diplomskirad.helper.alert.AlerDialog;
+import com.nemanjaasuv1912.diplomskirad.helper.alert.AlertType;
+import com.nemanjaasuv1912.diplomskirad.helper.api.RequestManager;
 import com.nemanjaasuv1912.diplomskirad.helper.validator.EmptyEditTextValidator;
-import com.nemanjaasuv1912.diplomskirad.ui.activity.base.BaseActivity;
+import com.nemanjaasuv1912.diplomskirad.ui.activity.base.ProgressBarActivity;
 
 import okhttp3.Response;
 
-public class CreateNewPostActivity extends BaseActivity {
+public class CreateNewPostActivity extends ProgressBarActivity {
 
     private TextInputEditText etPostText, etPostTitle;
     private TextInputLayout tilPostText, tilPostTitle;
@@ -24,20 +27,21 @@ public class CreateNewPostActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_post);
 
-        etPostText = (TextInputEditText) findViewById(R.id.new_post_text_et);
-        etPostTitle = (TextInputEditText) findViewById(R.id.new_post_title_et);
-
-        tilPostText = (TextInputLayout) findViewById(R.id.new_post_text_til);
-        tilPostTitle = (TextInputLayout) findViewById(R.id.new_post_title_til);
-
         groupId = getIntent().getExtras().getInt(Constants.GROUP_ID_KEY);
 
-        setToolbar(R.id.new_post_toolbar,getString(R.string.new_post_toolbar_title));
-       }
+        setToolbar(R.id.new_post_toolbar, getString(R.string.new_post_toolbar_title));
+
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        etPostText = (TextInputEditText) findViewById(R.id.new_post_text_et);
+        etPostTitle = (TextInputEditText) findViewById(R.id.new_post_title_et);
+        tilPostText = (TextInputLayout) findViewById(R.id.new_post_text_til);
+        tilPostTitle = (TextInputLayout) findViewById(R.id.new_post_title_til);
+    }
 
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
+
         return false;
     }
 
@@ -45,33 +49,44 @@ public class CreateNewPostActivity extends BaseActivity {
         tilPostTitle.setErrorEnabled(false);
         tilPostText.setErrorEnabled(false);
 
-        if(EmptyEditTextValidator.isValid(etPostTitle.getText().toString())){
-            if(EmptyEditTextValidator.isValid(etPostText.getText().toString())){
-                new RequestManager(){
+        boolean postTitleValid = EmptyEditTextValidator.isValid(etPostTitle.getText().toString(), tilPostTitle, getString(R.string.post_title_empty));
+        boolean postTextValid = EmptyEditTextValidator.isValid(etPostText.getText().toString(), tilPostText, getString(R.string.post_text_empty));
 
-                    @Override
-                    protected void onResponse(boolean isSuccessful, Response response) {
+        if (postTitleValid && postTextValid && !progressBarVisible()) {
+            showProgressBar();
+            new RequestManager() {
 
-                        if(isSuccessful) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    onSupportNavigateUp();
-                                }
-                            });
+                @Override
+                protected void onResponse(boolean isSuccessful, Response response) {
+                    hideProgressBar();
+                    if (isSuccessful) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                onSupportNavigateUp();
+                            }
+                        });
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                AlerDialog.showAlert(context, AlertType.CREATE_POST_FAILED);
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                protected void onFailure() {
+                    hideProgressBar();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            AlerDialog.showAlert(context, AlertType.REQUEST_ERROR);
                         }
-                    }
-
-                    @Override
-                    protected void onFailure() {
-
-                    }
-                }.createPost(etPostTitle.getText().toString(), etPostText.getText().toString(), groupId);
-            } else {
-                tilPostText.setError(getString(R.string.post_text_empty));
-            }
-        } else {
-            tilPostTitle.setError(getString(R.string.post_title_empty));
+                    });
+                }
+            }.createPost(etPostTitle.getText().toString(), etPostText.getText().toString(), groupId);
         }
     }
 }

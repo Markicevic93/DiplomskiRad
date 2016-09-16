@@ -6,7 +6,6 @@ import android.support.design.widget.TextInputLayout;
 import com.nemanjaasuv1912.diplomskirad.MyApplication;
 import com.nemanjaasuv1912.diplomskirad.R;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -18,16 +17,16 @@ public class EmailValidator {
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
 
-    public static boolean isValid(final String email, final TextInputLayout tilEmail){
+    public static boolean isValid(final String email, final TextInputLayout tilEmail) {
         Context context = MyApplication.getContext();
 
-        if(email.length() == 0){
+        if (email.length() == 0) {
             tilEmail.setError(context.getString(R.string.email_empty));
 
             return false;
         }
 
-        if (!VALID_EMAIL_ADDRESS_REGEX .matcher(email).find()){
+        if (!VALID_EMAIL_ADDRESS_REGEX.matcher(email).find()) {
             tilEmail.setError(context.getString(R.string.email_bad));
 
             return false;

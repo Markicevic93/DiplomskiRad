@@ -6,20 +6,23 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 
 import com.nemanjaasuv1912.diplomskirad.R;
 import com.nemanjaasuv1912.diplomskirad.helper.Constants;
-import com.nemanjaasuv1912.diplomskirad.helper.RequestManager;
+import com.nemanjaasuv1912.diplomskirad.helper.alert.AlerDialog;
+import com.nemanjaasuv1912.diplomskirad.helper.alert.AlertType;
+import com.nemanjaasuv1912.diplomskirad.helper.api.RequestManager;
 import com.nemanjaasuv1912.diplomskirad.model.Group;
 import com.nemanjaasuv1912.diplomskirad.model.University;
-import com.nemanjaasuv1912.diplomskirad.ui.activity.base.BaseActivity;
+import com.nemanjaasuv1912.diplomskirad.ui.activity.base.ProgressBarActivity;
 import com.nemanjaasuv1912.diplomskirad.ui.adapter.PostsAdapter;
 
 import java.io.IOException;
 
 import okhttp3.Response;
 
-public class GroupActivity extends BaseActivity {
+public class GroupActivity extends ProgressBarActivity {
 
     private RecyclerView recyclerView;
     private Group group;
@@ -31,10 +34,11 @@ public class GroupActivity extends BaseActivity {
 
         group = University.sharedUniversity.getGroup((getIntent().getExtras().getInt(Constants.GROUP_ID_KEY)));
 
-        recyclerView = (RecyclerView) findViewById(R.id.group_groups_rv);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         setToolbar(R.id.group_toolbar, group.getName());
+
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        recyclerView = (RecyclerView) findViewById(R.id.group_groups_rv);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
@@ -65,10 +69,13 @@ public class GroupActivity extends BaseActivity {
     }
 
     private void getGroupsPosts() {
-        new RequestManager(){
+        showProgressBar();
+        new RequestManager() {
+
             @Override
             protected void onResponse(boolean isSuccessful, Response response) {
-                if (isSuccessful){
+                hideProgressBar();
+                if (isSuccessful) {
                     try {
                         group.parsePosts(response.body().string());
 
@@ -86,6 +93,13 @@ public class GroupActivity extends BaseActivity {
 
             @Override
             protected void onFailure() {
+                hideProgressBar();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        AlerDialog.showAlert(context, AlertType.REQUEST_ERROR);
+                    }
+                });
             }
         }.getPostsForGroup(group.getId());
     }

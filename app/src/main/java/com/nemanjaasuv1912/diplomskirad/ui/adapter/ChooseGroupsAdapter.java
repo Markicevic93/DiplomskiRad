@@ -23,15 +23,13 @@ public class ChooseGroupsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private static final int YEAR_TYPE = 0;
     private static final int GROUP_TYPE = 1;
 
-    private ArrayList<Group> groups;
     private ArrayList<Group> items;
 
-    public ChooseGroupsAdapter(ArrayList<Group> groups){
-        this.groups = groups;
+    public ChooseGroupsAdapter(ArrayList<Group> groups) {
         items = new ArrayList<>();
 
-        for (int i = 0; i < groups.size(); i++){
-            if(i == 0 || (groups.get(i).getYear() > groups.get(i - 1).getYear())){
+        for (int i = 0; i < groups.size(); i++) {
+            if (i == 0 || (groups.get(i).getYear() > groups.get(i - 1).getYear())) {
                 items.add(groups.get(i));
             }
 
@@ -42,10 +40,10 @@ public class ChooseGroupsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
-        if(viewType == YEAR_TYPE){
+        if (viewType == YEAR_TYPE) {
             itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_choose_group_view_holder_year, parent, false);
             return new YearViewHolder(itemView);
-        }else{
+        } else {
             itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_choose_group_view_holder_group, parent, false);
             return new GroupViewHolder(itemView);
         }
@@ -53,11 +51,11 @@ public class ChooseGroupsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-        if(position == 0){
+        if (position == 0) {
             return YEAR_TYPE;
         }
 
-        if(items.get(position).getYear() > items.get(position - 1).getYear()){
+        if (items.get(position).getYear() > items.get(position - 1).getYear()) {
             return YEAR_TYPE;
         }
 
@@ -66,13 +64,13 @@ public class ChooseGroupsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Group group = items.get(position );
+        Group group = items.get(position);
 
-        if(getItemViewType(position) == YEAR_TYPE){
-            YearViewHolder yearViewHolder = (YearViewHolder)holder;
+        if (getItemViewType(position) == YEAR_TYPE) {
+            YearViewHolder yearViewHolder = (YearViewHolder) holder;
             yearViewHolder.tvYear.setText(group.getYearAsString());
-        }else{
-            GroupViewHolder groupViewHolder = (GroupViewHolder)holder;
+        } else {
+            GroupViewHolder groupViewHolder = (GroupViewHolder) holder;
             groupViewHolder.tvFullName.setText(group.getName());
             groupViewHolder.setSelected(group.isSelected());
         }
@@ -92,8 +90,8 @@ public class ChooseGroupsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             super(v);
             v.setOnClickListener(this);
 
-            tvFullName =  (TextView) v.findViewById(R.id.group_fullname);
-            civColor = (CircleImageView)  v.findViewById(R.id.group_color);
+            tvFullName = (TextView) v.findViewById(R.id.group_fullname);
+            civColor = (CircleImageView) v.findViewById(R.id.group_color);
         }
 
         @Override
@@ -103,11 +101,11 @@ public class ChooseGroupsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             setSelected(group.isSelected());
         }
 
-        public void setSelected(boolean selected){
-            if(selected){
+        public void setSelected(boolean selected) {
+            if (selected) {
                 tvFullName.setTextColor(getColor(android.R.color.black));
-                civColor.setImageDrawable(new ColorDrawable(getColor(android.R.color.holo_red_dark)));
-            }else{
+                civColor.setImageDrawable(new ColorDrawable(getColor(R.color.colorPrimary)));
+            } else {
                 tvFullName.setTextColor(getColor(android.R.color.darker_gray));
                 civColor.setImageDrawable(new ColorDrawable(getColor(android.R.color.darker_gray)));
             }
@@ -120,14 +118,15 @@ public class ChooseGroupsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public class YearViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        protected TextView tvYear;
         private boolean selected = true;
+
+        protected TextView tvYear;
 
         public YearViewHolder(View v) {
             super(v);
             v.setOnClickListener(this);
 
-            tvYear = (TextView)v.findViewById(R.id.group_year);
+            tvYear = (TextView) v.findViewById(R.id.group_year);
         }
 
         @Override
@@ -135,12 +134,11 @@ public class ChooseGroupsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             int currentPosition = getAdapterPosition() + 1;
 
             while (currentPosition < items.size() &&
-                    items.get(getAdapterPosition()).getYear() == items.get(currentPosition).getYear()){
+                    items.get(getAdapterPosition()).getYear() == items.get(currentPosition).getYear()) {
                 items.get(currentPosition++).setSelected(selected);
             }
 
-            selected = ! selected;
-
+            selected = !selected;
             notifyDataSetChanged();
         }
     }

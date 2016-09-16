@@ -1,8 +1,6 @@
 package com.nemanjaasuv1912.diplomskirad.model;
 
-import android.util.Log;
-
-import com.nemanjaasuv1912.diplomskirad.model.base.Model;
+import com.nemanjaasuv1912.diplomskirad.model.base.modelKeys;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by nemanjamarkicevic on 8/7/16.
  */
-public class Comment  extends Model<Comment>{
+public class Comment implements modelKeys {
 
     private int id;
     private String text;
@@ -30,8 +28,8 @@ public class Comment  extends Model<Comment>{
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
 
-            id      = jsonObject.getInt(ID_KEY);
-            text    = jsonObject.getString(TEXT_KEY);
+            id = jsonObject.getInt(ID_KEY);
+            text = jsonObject.getString(TEXT_KEY);
             updated = Calendar.getInstance();
             created = Calendar.getInstance();
             updated.setTimeInMillis(TimeUnit.SECONDS.toMillis(jsonObject.getInt(DATE_UPADTED_KEY)));
@@ -40,7 +38,8 @@ public class Comment  extends Model<Comment>{
             JSONObject studentJsonObject = jsonObject.getJSONObject(STUDENT_KEY);
             student = new Student(studentJsonObject.getInt(ID_KEY), studentJsonObject.getString(USERNAME_KEY));
 
-        } catch (JSONException ignored) {}
+        } catch (JSONException ignored) {
+        }
     }
 
     public String getText() {

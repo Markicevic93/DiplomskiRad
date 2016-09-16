@@ -2,7 +2,7 @@
 <resources>
 
     <!--Layout-->
-    <string name="post_comments">Comments:</string>
+    <string name="post_comments">COMMENTS</string>
     <string name="post_add_comment_hint">Add comment</string>
     <string name="post_button_send_title">SEND</string>
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--Layout-->
     <string name="profile_edittext_fullname_placeholder">Full name</string>
     <string name="profile_edittext_year_placeholder">Year</string>
     <string name="profile_edittext_birthday_placeholder">Birthday</string>

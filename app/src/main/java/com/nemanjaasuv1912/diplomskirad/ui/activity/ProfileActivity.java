@@ -1,64 +1,68 @@
 package com.nemanjaasuv1912.diplomskirad.ui.activity;
 
+import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nemanjaasuv1912.diplomskirad.R;
-import com.nemanjaasuv1912.diplomskirad.helper.RequestManager;
-import com.nemanjaasuv1912.diplomskirad.helper.validator.UniversityValidator;
+import com.nemanjaasuv1912.diplomskirad.helper.alert.AlerDialog;
+import com.nemanjaasuv1912.diplomskirad.helper.alert.AlertType;
+import com.nemanjaasuv1912.diplomskirad.helper.api.RequestManager;
+import com.nemanjaasuv1912.diplomskirad.helper.validator.EmptyEditTextValidator;
+import com.nemanjaasuv1912.diplomskirad.helper.validator.FullnameValidator;
 import com.nemanjaasuv1912.diplomskirad.helper.validator.YearValidator;
 import com.nemanjaasuv1912.diplomskirad.model.Student;
-import com.nemanjaasuv1912.diplomskirad.ui.activity.base.BaseActivity;
+import com.nemanjaasuv1912.diplomskirad.ui.activity.base.ProgressBarActivity;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import okhttp3.Response;
 
-public class ProfileActivity extends BaseActivity{
-
-    private TextInputLayout tilFullName, tilYear, tilBirthday, tilAboutMe;
-    private TextInputEditText etFullName, etYear, etBirthday, etAboutMe;
-    private TextView tvUsername, tvEmail, tvUniversity;
+public class ProfileActivity extends ProgressBarActivity {
 
     private Student student;
     private boolean editing;
     private Menu menu;
-    private HashMap<Integer,String> oldValues;
+    private HashMap<Integer, String> oldValues;
+
+    private TextInputLayout tilFullName, tilYear, tilBirthday, tilAboutMe;
+    private TextInputEditText etFullName, etYear, etBirthday, etAboutMe;
+    private TextView tvUsername, tvEmail, tvUniversity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        setToolbar(R.id.profile_toolbar);
-
-        tilFullName = (TextInputLayout) findViewById(R.id.profile_til_fullname);
-        tilYear = (TextInputLayout) findViewById(R.id.profile_til_year);
-        tilBirthday = (TextInputLayout) findViewById(R.id.profile_til_birthday);
-        tilAboutMe = (TextInputLayout) findViewById(R.id.profile_til_about_me);
-
-        etFullName = (TextInputEditText) findViewById(R.id.profile_et_fullname);
-        etYear = (TextInputEditText) findViewById(R.id.profile_et_year);
-        etBirthday = (TextInputEditText) findViewById(R.id.profile_et_birthday);
-        etAboutMe = (TextInputEditText) findViewById(R.id.profile_et_about_me);
-
-        tvUsername = (TextView) findViewById(R.id.profile_tv_username);
-        tvEmail = (TextView) findViewById(R.id.profile_tv_email);
-        tvUniversity = (TextView) findViewById(R.id.profile_tv_university);
-
         student = Student.sharedStudent;
 
-        tvUsername.setText(student.getUsername());
-        etYear.setText(student.getYearAsString());
-        tvEmail.setText(student.getEmail());
+        setToolbar(R.id.profile_toolbar);
+
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        tilFullName = (TextInputLayout) findViewById(R.id.profile_til_fullname);
+        tilBirthday = (TextInputLayout) findViewById(R.id.profile_til_birthday);
+        tilAboutMe = (TextInputLayout) findViewById(R.id.profile_til_about_me);
+        tilYear = (TextInputLayout) findViewById(R.id.profile_til_year);
+        etFullName = (TextInputEditText) findViewById(R.id.profile_et_fullname);
+        etBirthday = (TextInputEditText) findViewById(R.id.profile_et_birthday);
+        etAboutMe = (TextInputEditText) findViewById(R.id.profile_et_about_me);
+        etYear = (TextInputEditText) findViewById(R.id.profile_et_year);
+        tvUniversity = (TextView) findViewById(R.id.profile_tv_university);
+        tvUsername = (TextView) findViewById(R.id.profile_tv_username);
+        tvEmail = (TextView) findViewById(R.id.profile_tv_email);
+
         tvUniversity.setText(student.getUniversityName());
-        etFullName.setText(student.getFullname());
+        tvUsername.setText(student.getUsername());
+        tvEmail.setText(student.getEmail());
         etBirthday.setText(student.getBirthdate());
+        etFullName.setText(student.getFullname());
+        etYear.setText(student.getYearAsString());
         etAboutMe.setText(student.getAboutMe());
 
         setEditTextsEnabled(false);
@@ -68,6 +72,7 @@ public class ProfileActivity extends BaseActivity{
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.profile_menu, menu);
         this.menu = menu;
+
         return true;
     }
 
@@ -84,13 +89,13 @@ public class ProfileActivity extends BaseActivity{
             clearErrors();
 
             return true;
-        }else if (id == R.id.action_edit_confirm) {
-            if(editing && saveProfile()){
+        } else if (id == R.id.action_edit_confirm) {
+            if (editing && saveProfile()) {
                 editing = false;
                 setEditTextsEnabled(false);
                 menu.findItem(R.id.action_cancel).setVisible(false);
                 setIconForMenuItem(item, android.R.drawable.ic_menu_edit);
-            }else{
+            } else {
                 editing = true;
                 setEditTextsEnabled(true);
                 saveOldValues();
@@ -105,22 +110,21 @@ public class ProfileActivity extends BaseActivity{
     }
 
     private void clearErrors() {
-        tilYear.setErrorEnabled(false);
         tilBirthday.setErrorEnabled(false);
         tilFullName.setErrorEnabled(false);
         tilAboutMe.setErrorEnabled(false);
+        tilYear.setErrorEnabled(false);
     }
 
     private void saveOldValues() {
         oldValues = new HashMap<>();
-
-        oldValues.put(etFullName.getId(),etFullName.getText().toString());
-        oldValues.put(etYear.getId(),etYear.getText().toString());
-        oldValues.put(etBirthday.getId(),etBirthday.getText().toString());
-        oldValues.put(etAboutMe.getId(),etAboutMe.getText().toString());
+        oldValues.put(etFullName.getId(), etFullName.getText().toString());
+        oldValues.put(etYear.getId(), etYear.getText().toString());
+        oldValues.put(etBirthday.getId(), etBirthday.getText().toString());
+        oldValues.put(etAboutMe.getId(), etAboutMe.getText().toString());
     }
 
-    private void putOldValues(){
+    private void putOldValues() {
         etFullName.setText(oldValues.get(etFullName.getId()));
         etYear.setText(oldValues.get(etYear.getId()));
         etBirthday.setText(oldValues.get(etBirthday.getId()));
@@ -135,13 +139,12 @@ public class ProfileActivity extends BaseActivity{
     }
 
     private boolean saveProfile() {
-        boolean fullnameValid = UniversityValidator.isValid(etFullName.getText().toString(), tilFullName);
-        boolean birthdayValid = YearValidator.isValid(etBirthday.getText().toString(), tilBirthday);
+        boolean fullnameValid = FullnameValidator.isValid(etFullName.getText().toString(), tilFullName);
+        boolean birthdayValid = EmptyEditTextValidator.isValid(etBirthday.getText().toString(), tilBirthday, getString(R.string.birthday_text_empty));
+        boolean aboutMeValid = EmptyEditTextValidator.isValid(etAboutMe.getText().toString(), tilAboutMe, getString(R.string.about_me_text_empty));
         boolean yearValid = YearValidator.isValid(etYear.getText().toString(), tilYear);
-        boolean aboutMeValid = YearValidator.isValid(etAboutMe.getText().toString(), tilAboutMe);
 
-        if(fullnameValid && birthdayValid && yearValid && aboutMeValid){
-
+        if (fullnameValid && birthdayValid && yearValid && aboutMeValid) {
             student.setFullname(etFullName.getText().toString());
             student.setBirthdate(etBirthday.getText().toString());
             student.setYear(Integer.parseInt(etYear.getText().toString()));
@@ -156,16 +159,29 @@ public class ProfileActivity extends BaseActivity{
     }
 
     public void updateStudent() {
-        new RequestManager(){
+        showProgressBar();
+        new RequestManager() {
 
             @Override
             protected void onResponse(boolean isSuccessful, Response response) {
-                // TODO: 9/14/16 Update student here
+                hideProgressBar();
+                if (isSuccessful) {
+                    try {
+                        Student.sharedStudent = new Student(response.body().string());
+                    } catch (IOException ignored) {
+                    }
+                }
             }
 
             @Override
             protected void onFailure() {
-
+                hideProgressBar();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        AlerDialog.showAlert(context, AlertType.REQUEST_ERROR);
+                    }
+                });
             }
         }.updateStudent(student);
     }

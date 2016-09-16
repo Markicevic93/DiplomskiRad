@@ -11,7 +11,11 @@
 
     <style name="ToolbarWithColor" parent="Widget.AppCompat.Toolbar">
     <item name="android:background">@color/toolbar_background_color</item>
+    </style>
 
+    <style name="ProgressBarStyle" parent="Base.Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:indeterminate">true</item>
+        <item name="android:visibility">invisible</item>
     </style>
 
 </resources>

@@ -1,6 +1,6 @@
 package com.nemanjaasuv1912.diplomskirad.model;
 
-import com.nemanjaasuv1912.diplomskirad.model.base.Model;
+import com.nemanjaasuv1912.diplomskirad.model.base.modelKeys;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,7 +8,7 @@ import org.json.JSONObject;
 /**
  * Created by nemanjamarkicevic on 8/8/16.
  */
-public class Student extends Model<Student> {
+public class Student implements modelKeys {
 
     public static Student sharedStudent;
 
@@ -22,48 +22,44 @@ public class Student extends Model<Student> {
     private String aboutMe;
     private String email;
 
-    public static void parse(String jsonString){
+    public static void parse(String jsonString) {
         Student.sharedStudent = new Student(jsonString);
     }
 
     public Student(int id, String username) {
-        this.id         = id;
-        this.username   = username;
-        fullname        = "";
-        email           = "";
-        birthdate       = "";
-        aboutMe         = "";
-        year            = 0;
-        universityName  = "";
+        this.id = id;
+        this.username = username;
+        fullname = "";
+        email = "";
+        birthdate = "";
+        aboutMe = "";
+        year = 0;
+        universityName = "";
     }
 
     public Student(String jsonString) {
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
 
-            id          = jsonObject.getInt(ID_KEY);
-            username    = jsonObject.getString(USERNAME_KEY);
-            fullname    = jsonObject.getString(FULLNAME_KEY);
-            email       = jsonObject.getString(EMAIL_KEY);
-            birthdate   = jsonObject.getString(BIRTHDATE_KEY);
-            aboutMe     = jsonObject.getString(ABOUT_KEY);
-            year        = jsonObject.getInt(YEAR_KEY);
-
+            id = jsonObject.getInt(ID_KEY);
+            username = jsonObject.getString(USERNAME_KEY);
+            fullname = jsonObject.getString(FULLNAME_KEY);
+            email = jsonObject.getString(EMAIL_KEY);
+            birthdate = jsonObject.getString(BIRTHDATE_KEY);
+            aboutMe = jsonObject.getString(ABOUT_KEY);
+            year = jsonObject.getInt(YEAR_KEY);
 
             JSONObject universityJsonObject = jsonObject.getJSONObject(UNIVERSITY_KEY);
             universityName = universityJsonObject.getString(University.NAME_KEY);
 
             Student.sharedStudent = this;
 
-        } catch (JSONException ignored) {}
+        } catch (JSONException ignored) {
+        }
     }
 
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getUsername() {
@@ -78,7 +74,7 @@ public class Student extends Model<Student> {
         return year;
     }
 
-    public String getYearAsString(){
+    public String getYearAsString() {
         return year + "";
     }
 

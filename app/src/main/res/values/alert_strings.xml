@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="alert_ok_button_title">OK</string>
+
+    <!--Request error-->
+    <string name="alert_request_error_title">Request error</string>
+    <string name="alert_request_error_text">Something went wrong while making request</string>
+
+    <!--Login failed-->
+    <string name="alert_login_failed_title">Login failed</string>
+    <string name="alert_login_failed_text">Your credentials are wrong</string>
+
+    <!--Create post failed-->
+    <string name="alert_create_post_failed_title">Creating post failed</string>
+    <string name="alert_create_post_failed_text">Error occurred create new post</string>
+
+    <!--Add comment failed-->
+    <string name="alert_add_comment_failed_title">Adding comment failed</string>
+    <string name="alert_add_comment_failed_text">Error occurred while trying to add new comment</string>
+</resources>

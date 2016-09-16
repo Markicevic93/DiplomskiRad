@@ -11,15 +11,15 @@ import com.nemanjaasuv1912.diplomskirad.model.Student;
  */
 public class StudentSharedPref {
 
-    protected static SharedPreferences getSharedPref(){
+    protected static SharedPreferences getSharedPref() {
         return MyApplication.getContext().getSharedPreferences(Student.sharedStudent.getEmail(), Context.MODE_PRIVATE);
     }
 
-    public static Boolean getIsSubjectSelected(String groupId){
+    public static Boolean getIsSubjectSelected(String groupId) {
         return getSharedPref().getBoolean(groupId, false);
     }
 
-    public static void putIsSubjectSelected(String groupId, boolean isSelected){
+    public static void putIsSubjectSelected(String groupId, boolean isSelected) {
         SharedPreferences.Editor editor = getSharedPref().edit();
         editor.putBoolean(groupId, isSelected);
         editor.apply();

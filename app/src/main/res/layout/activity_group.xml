@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/white"
+    android:background="@color/colorPrimary"
     tools:context=".ui.activity.GroupActivity">
 
     <android.support.v7.widget.Toolbar
@@ -13,9 +13,20 @@
         android:layout_height="wrap_content"
         style="@style/ToolbarWithColor"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/group_groups_rv"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
 
+        <ProgressBar
+            android:id="@id/progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ProgressBarStyle"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/group_groups_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp"/>
+    </FrameLayout>
 </LinearLayout>

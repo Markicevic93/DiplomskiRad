@@ -1,17 +1,20 @@
 package com.nemanjaasuv1912.diplomskirad.ui.activity;
 
-import android.support.design.widget.TextInputLayout;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.nemanjaasuv1912.diplomskirad.R;
-import com.nemanjaasuv1912.diplomskirad.helper.RequestManager;
+import com.nemanjaasuv1912.diplomskirad.helper.alert.AlerDialog;
+import com.nemanjaasuv1912.diplomskirad.helper.alert.AlertType;
+import com.nemanjaasuv1912.diplomskirad.helper.api.RequestManager;
 import com.nemanjaasuv1912.diplomskirad.helper.validator.EmailValidator;
 import com.nemanjaasuv1912.diplomskirad.helper.validator.PasswordValidator;
 import com.nemanjaasuv1912.diplomskirad.model.Student;
 import com.nemanjaasuv1912.diplomskirad.model.University;
-import com.nemanjaasuv1912.diplomskirad.ui.activity.base.BaseActivity;
+import com.nemanjaasuv1912.diplomskirad.ui.activity.base.ProgressBarActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,7 +23,7 @@ import java.io.IOException;
 
 import okhttp3.Response;
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends ProgressBarActivity {
 
     private TextInputLayout tilEmail, tilPassword;
     private EditText etEmail, etPassword;
@@ -30,46 +33,68 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         tilEmail = (TextInputLayout) findViewById(R.id.login_til_email);
         tilPassword = (TextInputLayout) findViewById(R.id.login_til_password);
         etEmail = (EditText) findViewById(R.id.login_et_email);
         etPassword = (EditText) findViewById(R.id.login_et_password);
     }
 
-    public void signinOnClick(View view) {
-        etEmail.setText("nemanja@raf.edu.rs");
-        etPassword.setText("sifra");
+    @Override
+    public void onBackPressed() {
 
-        if (credentialsValid()) {
-            new RequestManager(){
-                @Override
-                protected void onResponse(boolean isSuccessful, Response response) {
-                    if (isSuccessful){
-                        try {
-                            String body = response.body().string();
-                            Student.parse(body);
-                            Student.sharedStudent.setPassword(etPassword.getText().toString());
-                            University.parse(new JSONObject(body).getJSONObject(Student.UNIVERSITY_KEY).toString());
+    }
 
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    startActivity(MainActivity.class);
-                                }
-                            });
-
-                        } catch (IOException ignored) {} catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-
-                @Override
-                protected void onFailure() {
-
-                }
-            }.login(etEmail.getText().toString(), etPassword.getText().toString());
+    public void loginOnClick(View view) {
+        
+        if (credentialsValid() && !progressBarVisible()) {
+            login();
         }
+    }
+
+    private void login() {
+        showProgressBar();
+        new RequestManager() {
+
+            @Override
+            protected void onResponse(boolean isSuccessful, Response response) {
+                hideProgressBar();
+                if (isSuccessful) {
+                    try {
+                        String body = response.body().string();
+                        Student.parse(body);
+                        Student.sharedStudent.setPassword(etPassword.getText().toString());
+                        University.parse(new JSONObject(body).getJSONObject(Student.UNIVERSITY_KEY).toString());
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                startActivity(MainActivity.class);
+                            }
+                        });
+                    } catch (IOException | JSONException ignored) {
+                    }
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            AlerDialog.showAlert(context, AlertType.LOGIN_FAILED);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            protected void onFailure() {
+                hideProgressBar();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        AlerDialog.showAlert(context, AlertType.REQUEST_ERROR);
+                    }
+                });
+            }
+        }.login(etEmail.getText().toString(), etPassword.getText().toString());
     }
 
     private boolean credentialsValid() {
@@ -82,7 +107,4 @@ public class LoginActivity extends BaseActivity {
     public void signupOnClick(View view) {
         startActivity(SignupActivity.class);
     }
-
-    @Override
-    public void onBackPressed() {}
 }
