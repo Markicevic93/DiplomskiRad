@@ -1,4 +1,4 @@
-<com.nemanjaasuv1912.diplomskirad.ui.view.SquareFrameLayout
+<com.nemanjaasuv1912.systemForCollaborativeLearning.ui.view.SquareFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -64,4 +64,4 @@
             android:textColor="@android:color/black"/>
 
     </LinearLayout>
-</com.nemanjaasuv1912.diplomskirad.ui.view.SquareFrameLayout>
+</com.nemanjaasuv1912.systemForCollaborativeLearning.ui.view.SquareFrameLayout>

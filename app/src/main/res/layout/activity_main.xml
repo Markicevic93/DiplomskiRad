@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/white"
-    tools:context="com.nemanjaasuv1912.diplomskirad.ui.activity.MainActivity">
+    tools:context="com.nemanjaasuv1912.systemForCollaborativeLearning.ui.activity.MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/main_toolbar"

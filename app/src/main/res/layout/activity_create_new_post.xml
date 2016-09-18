@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorPrimary"
-    tools:context="com.nemanjaasuv1912.diplomskirad.ui.activity.CreateNewPostActivity">
+    tools:context="com.nemanjaasuv1912.systemForCollaborativeLearning.ui.activity.CreateNewPostActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/new_post_toolbar"

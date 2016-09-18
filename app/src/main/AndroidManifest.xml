@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.nemanjaasuv1912.diplomskirad">
+    package="com.nemanjaasuv1912.systemForCollaborativeLearning">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".MyApplication"
+        android:name="com.nemanjaasuv1912.systemForCollaborativeLearning.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name="com.nemanjaasuv1912.systemForCollaborativeLearning.ui.activity.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,24 +21,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.SignupActivity"
-            android:parentActivityName=".ui.activity.LoginActivity" />
-        <activity android:name=".ui.activity.MainActivity" />
+            android:name="com.nemanjaasuv1912.systemForCollaborativeLearning.ui.activity.SignupActivity"
+            android:parentActivityName="com.nemanjaasuv1912.systemForCollaborativeLearning.ui.activity.LoginActivity" />
+        <activity android:name="com.nemanjaasuv1912.systemForCollaborativeLearning.ui.activity.MainActivity" />
         <activity
-            android:name=".ui.activity.ProfileActivity"
-            android:parentActivityName=".ui.activity.MainActivity" />
+            android:name="com.nemanjaasuv1912.systemForCollaborativeLearning.ui.activity.ProfileActivity"
+            android:parentActivityName="com.nemanjaasuv1912.systemForCollaborativeLearning.ui.activity.MainActivity" />
         <activity
-            android:name=".ui.activity.GroupActivity"
-            android:parentActivityName=".ui.activity.MainActivity" />
+            android:name="com.nemanjaasuv1912.systemForCollaborativeLearning.ui.activity.GroupActivity"
+            android:parentActivityName="com.nemanjaasuv1912.systemForCollaborativeLearning.ui.activity.MainActivity" />
         <activity
-            android:name=".ui.activity.ChooseGroupActivity"
-            android:parentActivityName=".ui.activity.MainActivity" />
+            android:name="com.nemanjaasuv1912.systemForCollaborativeLearning.ui.activity.ChooseGroupActivity"
+            android:parentActivityName="com.nemanjaasuv1912.systemForCollaborativeLearning.ui.activity.MainActivity" />
         <activity
-            android:name=".ui.activity.PostActivity"
-            android:parentActivityName=".ui.activity.GroupActivity" />
+            android:name="com.nemanjaasuv1912.systemForCollaborativeLearning.ui.activity.PostActivity"
+            android:parentActivityName="com.nemanjaasuv1912.systemForCollaborativeLearning.ui.activity.GroupActivity" />
         <activity
-            android:name=".ui.activity.CreateNewPostActivity"
-            android:parentActivityName=".ui.activity.GroupActivity" />
+            android:name="com.nemanjaasuv1912.systemForCollaborativeLearning.ui.activity.CreateNewPostActivity"
+            android:parentActivityName="com.nemanjaasuv1912.systemForCollaborativeLearning.ui.activity.GroupActivity" />
     </application>
 
 </manifest>
