@@ -1,7 +1,7 @@
 package com.nemanjaasuv1912.systemForCollaborativeLearning.model;
 
 import com.nemanjaasuv1912.systemForCollaborativeLearning.helper.sharedPreferences.StudentSharedPref;
-import com.nemanjaasuv1912.systemForCollaborativeLearning.model.base.modelKeys;
+import com.nemanjaasuv1912.systemForCollaborativeLearning.model.base.ModelKeys;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,7 +14,7 @@ import java.util.Comparator;
 /**
  * Created by nemanjamarkicevic on 8/7/16.
  */
-public class Group implements modelKeys {
+public class Group implements ModelKeys {
 
     private int id;
     private int year;

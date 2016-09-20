@@ -31,12 +31,6 @@ public class UsernameValidator {
             return false;
         }
 
-        if (username.length() == 0) {
-            tilUsername.setError(context.getString(R.string.username_empty));
-
-            return false;
-        }
-
         if (username.length() < USENNAME_MIN_LENGHT) {
             tilUsername.setError(context.getString(R.string.username_short));
 

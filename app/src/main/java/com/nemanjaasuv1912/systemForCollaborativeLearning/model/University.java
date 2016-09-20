@@ -1,6 +1,6 @@
 package com.nemanjaasuv1912.systemForCollaborativeLearning.model;
 
-import com.nemanjaasuv1912.systemForCollaborativeLearning.model.base.modelKeys;
+import com.nemanjaasuv1912.systemForCollaborativeLearning.model.base.ModelKeys;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,7 +13,7 @@ import java.util.Comparator;
 /**
  * Created by nemanjamarkicevic on 8/7/16.
  */
-public class University implements modelKeys {
+public class University implements ModelKeys {
 
     public static University sharedUniversity;
 

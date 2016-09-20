@@ -3,7 +3,7 @@ package com.nemanjaasuv1912.systemForCollaborativeLearning.model.base;
 /**
  * Created by nemanjamarkicevic on 9/12/16.
  */
-public interface modelKeys {
+public interface ModelKeys {
 
     String ID_KEY = "id";
     String STUDENT_ID_KEY = "student_id";

@@ -17,12 +17,6 @@ public class PasswordValidator {
     public static boolean isValid(final String password, final TextInputLayout tilPassword) {
         Context context = MyApplication.getContext();
 
-        if (password.trim().length() == 0) {
-            tilPassword.setError(context.getString(R.string.password_empty));
-
-            return false;
-        }
-
         if (password.length() < PASSWORD_MIN_LENGHT) {
             tilPassword.setError(context.getString(R.string.password_short));
 

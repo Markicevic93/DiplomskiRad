@@ -1,6 +1,6 @@
 package com.nemanjaasuv1912.systemForCollaborativeLearning.model;
 
-import com.nemanjaasuv1912.systemForCollaborativeLearning.model.base.modelKeys;
+import com.nemanjaasuv1912.systemForCollaborativeLearning.model.base.ModelKeys;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by nemanjamarkicevic on 8/7/16.
  */
-public class Post implements modelKeys {
+public class Post implements ModelKeys {
 
     private int id;
     private String title;

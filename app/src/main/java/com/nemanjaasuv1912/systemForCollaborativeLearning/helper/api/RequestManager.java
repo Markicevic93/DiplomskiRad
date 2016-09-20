@@ -2,7 +2,7 @@ package com.nemanjaasuv1912.systemForCollaborativeLearning.helper.api;
 
 import android.util.Log;
 
-import com.nemanjaasuv1912.systemForCollaborativeLearning.helper.api.base.requestKeys;
+import com.nemanjaasuv1912.systemForCollaborativeLearning.helper.api.base.RequestKeys;
 import com.nemanjaasuv1912.systemForCollaborativeLearning.model.Student;
 import com.nemanjaasuv1912.systemForCollaborativeLearning.model.University;
 
@@ -20,13 +20,25 @@ import okhttp3.Response;
 /**
  * Created by nemanjamarkicevic on 9/10/16.
  */
-public abstract class RequestManager implements requestKeys {
+public abstract class RequestManager implements RequestKeys {
 
     public void getUniversity(String studentEmail) {
         HttpUrl.Builder urlBuilder = HttpUrl.parse(UNIVERSITY).newBuilder();
         urlBuilder.addQueryParameter(University.EMAIL_KEY, studentEmail);
 
         newCall(new Request.Builder().url(urlBuilder.build().toString()).build());
+    }
+
+    public void getGroups(int universityId) {
+        newCall(new Request.Builder().url(GROUPS.replace(UNIVERSITY_ID_KEY, universityId + "")).build());
+    }
+
+    public void getCommentsForPost(int postId) {
+        newCall(new Request.Builder().url(COMMENTS.replace(POST_ID_KEY, postId + "")).build());
+    }
+
+    public void getPostsForGroup(int groupId) {
+        newCall(new Request.Builder().url(POSTS.replace(GROUP_ID_KEY, groupId + "")).build());
     }
 
     public void login(String email, String password) {
@@ -46,18 +58,6 @@ public abstract class RequestManager implements requestKeys {
                 .build();
 
         newCall(new Request.Builder().url(REGISTER).post(formBody).build());
-    }
-
-    public void getGroups(int universityId) {
-        newCall(new Request.Builder().url(GROUPS.replace(UNIVERSITY_ID_KEY, universityId + "")).build());
-    }
-
-    public void getCommentsForPost(int postId) {
-        newCall(new Request.Builder().url(COMMENTS.replace(POST_ID_KEY, postId + "")).build());
-    }
-
-    public void getPostsForGroup(int groupId) {
-        newCall(new Request.Builder().url(POSTS.replace(GROUP_ID_KEY, groupId + "")).build());
     }
 
     public void updateStudent(Student student) {
@@ -111,17 +111,15 @@ public abstract class RequestManager implements requestKeys {
     private void newCall(Request request) {
         final RequestManager requestManager = this;
 
-        Log.i("Request Manager", " Url: " + request.url());
+        Log.i("url",request.url().toString());
         new OkHttpClient().newCall(request).enqueue(new Callback() {
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
-                Log.i("Request Manager", " Success");
                 requestManager.onResponse(response.isSuccessful(), response);
             }
 
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.i("Request Manager", " Failed");
                 requestManager.onFailure();
             }
         });

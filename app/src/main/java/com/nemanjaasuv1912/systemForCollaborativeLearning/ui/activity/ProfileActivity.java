@@ -14,8 +14,6 @@ import com.nemanjaasuv1912.systemForCollaborativeLearning.helper.alert.AlerDialo
 import com.nemanjaasuv1912.systemForCollaborativeLearning.helper.alert.AlertType;
 import com.nemanjaasuv1912.systemForCollaborativeLearning.helper.api.RequestManager;
 import com.nemanjaasuv1912.systemForCollaborativeLearning.helper.validator.EmptyEditTextValidator;
-import com.nemanjaasuv1912.systemForCollaborativeLearning.helper.validator.FullnameValidator;
-import com.nemanjaasuv1912.systemForCollaborativeLearning.helper.validator.YearValidator;
 import com.nemanjaasuv1912.systemForCollaborativeLearning.model.Student;
 import com.nemanjaasuv1912.systemForCollaborativeLearning.ui.activity.base.ProgressBarActivity;
 
@@ -139,10 +137,10 @@ public class ProfileActivity extends ProgressBarActivity {
     }
 
     private boolean saveProfile() {
-        boolean fullnameValid = FullnameValidator.isValid(etFullName.getText().toString(), tilFullName);
+        boolean fullnameValid = EmptyEditTextValidator.isValid(etFullName.getText().toString(), tilFullName, getString(R.string.fullname_empty));
         boolean birthdayValid = EmptyEditTextValidator.isValid(etBirthday.getText().toString(), tilBirthday, getString(R.string.birthday_text_empty));
         boolean aboutMeValid = EmptyEditTextValidator.isValid(etAboutMe.getText().toString(), tilAboutMe, getString(R.string.about_me_text_empty));
-        boolean yearValid = YearValidator.isValid(etYear.getText().toString(), tilYear);
+        boolean yearValid = EmptyEditTextValidator.isValid(etYear.getText().toString(), tilYear, getString(R.string.year_empty));
 
         if (fullnameValid && birthdayValid && yearValid && aboutMeValid) {
             student.setFullname(etFullName.getText().toString());

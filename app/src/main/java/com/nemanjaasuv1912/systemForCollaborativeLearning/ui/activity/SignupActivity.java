@@ -11,9 +11,9 @@ import com.nemanjaasuv1912.systemForCollaborativeLearning.helper.alert.AlerDialo
 import com.nemanjaasuv1912.systemForCollaborativeLearning.helper.alert.AlertType;
 import com.nemanjaasuv1912.systemForCollaborativeLearning.helper.api.RequestManager;
 import com.nemanjaasuv1912.systemForCollaborativeLearning.helper.validator.EmailValidator;
+import com.nemanjaasuv1912.systemForCollaborativeLearning.helper.validator.EmptyEditTextValidator;
 import com.nemanjaasuv1912.systemForCollaborativeLearning.helper.validator.PasswordValidator;
 import com.nemanjaasuv1912.systemForCollaborativeLearning.helper.validator.UsernameValidator;
-import com.nemanjaasuv1912.systemForCollaborativeLearning.helper.validator.YearValidator;
 import com.nemanjaasuv1912.systemForCollaborativeLearning.model.Student;
 import com.nemanjaasuv1912.systemForCollaborativeLearning.model.University;
 import com.nemanjaasuv1912.systemForCollaborativeLearning.ui.activity.base.ProgressBarActivity;
@@ -158,7 +158,7 @@ public class SignupActivity extends ProgressBarActivity {
         boolean usernameValid = UsernameValidator.isValid(etUsername.getText().toString(), tilUsername);
         boolean passwordValid = PasswordValidator.isValid(etPassword.getText().toString(), tilPassword);
         boolean emailValid = EmailValidator.isValid(etEmail.getText().toString(), tilEmail);
-        boolean yearValid = YearValidator.isValid(etYear.getText().toString(), tilYear);
+        boolean yearValid = EmptyEditTextValidator.isValid(etYear.getText().toString(), tilYear, getString(R.string.year_empty));
 
         return usernameValid && passwordValid && emailValid && yearValid;
     }

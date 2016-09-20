@@ -3,14 +3,14 @@ package com.nemanjaasuv1912.systemForCollaborativeLearning.helper.api.base;
 /**
  * Created by nemanjamarkicevic on 9/12/16.
  */
-public interface requestKeys {
+public interface RequestKeys {
 
     String STUDENT_ID_KEY = "{student_id}";
     String UNIVERSITY_ID_KEY = "{university_id}";
     String GROUP_ID_KEY = "{group_id}";
     String POST_ID_KEY = "{post_id}";
 
-    String IP_ADRESS = "192.168.0.47"; // with 3g 172.20.10.3
+    String IP_ADRESS = "192.168.0.12"; // with 3g 172.20.10.3
     String API_BASE = "http://" + IP_ADRESS + ":8080/api";
     String UNIVERSITY = API_BASE + "/university";
     String REGISTER = API_BASE + "/register";

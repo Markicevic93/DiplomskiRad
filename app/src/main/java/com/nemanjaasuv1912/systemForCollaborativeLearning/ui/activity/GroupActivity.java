@@ -45,7 +45,7 @@ public class GroupActivity extends ProgressBarActivity {
     protected void onResume() {
         super.onResume();
 
-        getGroupsPosts();
+        getPostsForGroup();
     }
 
     @Override
@@ -68,7 +68,7 @@ public class GroupActivity extends ProgressBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void getGroupsPosts() {
+    private void getPostsForGroup() {
         showProgressBar();
         new RequestManager() {
 

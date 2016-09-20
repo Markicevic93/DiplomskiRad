@@ -1,6 +1,6 @@
 package com.nemanjaasuv1912.systemForCollaborativeLearning.model;
 
-import com.nemanjaasuv1912.systemForCollaborativeLearning.model.base.modelKeys;
+import com.nemanjaasuv1912.systemForCollaborativeLearning.model.base.ModelKeys;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,7 +8,7 @@ import org.json.JSONObject;
 /**
  * Created by nemanjamarkicevic on 8/8/16.
  */
-public class Student implements modelKeys {
+public class Student implements ModelKeys {
 
     public static Student sharedStudent;
 
